@@ -664,6 +664,7 @@ const backendLv5: LearningStage = {
         {
             id: 'backend-lv5-l4',
             title: '4. 幂等性：为什么“再执行一次”不应该把结果做坏',
+            labId: 'idempotency-lab',
             content: `
 # 幂等性
 
