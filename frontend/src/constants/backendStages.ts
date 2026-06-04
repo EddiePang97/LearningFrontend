@@ -996,7 +996,7 @@ const backendLv8: LearningStage = {
         {
             id: 'backend-lv8-l4',
             title: '4. 威胁建模：先想最坏情况，再决定先防什么',
-            labId: 'csp-lab',
+            labId: 'threat-model-lab',
             content: `
 # 威胁建模
 
