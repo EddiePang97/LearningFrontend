@@ -215,6 +215,7 @@ DELETE /courses/:id
         {
             id: 'backend-lv1-l4',
             title: '4. 一致的错误响应模型',
+            labId: 'api-contract-lab',
             content: `
 # 一致的错误响应模型
 
