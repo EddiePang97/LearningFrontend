@@ -1165,11 +1165,514 @@ capstone 完成后，真正有价值的问题通常是：
 ];
 
 const NETWORK_STAGES: LearningStage[] = [
-    createPlaceholderStage('network', 0, 'HTTP 请求生命周期', '理解 URL 到响应的完整路径。', ['HTTP', 'Request', 'Response'], '追踪一次请求从浏览器到服务端再返回。', '能解释请求头、响应头、状态码和 body 的作用。'),
-    createPlaceholderStage('network', 1, 'DNS 与域名系统', '学习域名解析、记录类型和传播。', ['DNS', 'A Record', 'CNAME'], '配置并解释一个域名解析流程。', '能判断域名问题是解析、缓存还是配置导致。'),
-    createPlaceholderStage('network', 2, 'TCP/IP 与 UDP', '理解连接、端口、包、延迟和可靠性。', ['TCP', 'UDP', 'Port', 'Latency'], '解释网络连接如何建立与传输。', '能区分 TCP 和 UDP 的使用场景。'),
-    createPlaceholderStage('network', 3, 'TLS 与 HTTPS', '学习证书、握手、加密和信任链。', ['TLS', 'HTTPS', 'Certificate'], '分析 HTTPS 为什么安全。', '能解释证书错误和混合内容问题。'),
-    createPlaceholderStage('network', 4, '浏览器网络性能', '理解连接复用、HTTP/2、HTTP/3 和优先级。', ['HTTP/2', 'HTTP/3', 'Connection'], '优化网页请求瀑布图。', '能通过 DevTools 判断网络加载瓶颈。'),
+    {
+        id: 'network-lv0',
+        level: 0,
+        title: 'Level 0: HTTP 请求生命周期',
+        description: '从浏览器地址栏开始，追踪一次请求如何形成、发送、到达服务端并带着响应返回，先把 Web 最基本的通信链路看清楚。',
+        topics: ['HTTP', 'Request', 'Response', 'Headers', 'Status Code'],
+        keyConcepts: ['请求报文', '响应报文', '方法与语义', '状态码', '首部信息'],
+        mission: '画出一次 HTTP 请求从浏览器发出到页面接收响应的完整路径，并能解释关键字段的含义。',
+        outcome: '能解释 URL、method、headers、status code 和 response body 在一次 HTTP 交互里分别承担什么角色。',
+        checklist: [
+            '能区分 request 和 response 分别携带哪些信息',
+            '能解释 GET、POST、PUT、DELETE 的常见语义差异',
+            '能根据状态码初步判断请求是成功、失败还是需要重定向',
+        ],
+        resources: [
+            { name: 'MDN HTTP Overview', url: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Overview' },
+            { name: 'HTTP Messages', url: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Messages' },
+        ],
+        lessons: [
+            {
+                id: 'network-lv0-l1',
+                title: '1. 浏览器发出的不是“一个函数”，而是一段报文',
+                content: `
+# HTTP 报文视角
+
+浏览器访问页面时，真正发出去的不是“我要打开这个页面”这么一句自然语言，而是一段结构化请求报文。
+
+里面通常包括：
+
+- method
+- path
+- headers
+- body
+
+只有把请求看成结构化报文，你后面理解调试、缓存、安全和性能才会更稳。
+`,
+            },
+            {
+                id: 'network-lv0-l2',
+                title: '2. 响应由状态码、首部和内容共同组成',
+                content: `
+# 响应三件套
+
+一次响应通常至少包含三层信息：
+
+- **状态码**: 成功还是失败
+- **headers**: 如何解析、缓存或保护内容
+- **body**: 真正返回的数据或页面内容
+
+很多调试误区来自只看 body，不看状态码和 headers。
+`,
+            },
+            {
+                id: 'network-lv0-l3',
+                title: '3. 方法语义决定接口意图',
+                content: `
+# 方法与意图
+
+HTTP 方法不只是语法糖，它是在表达这次请求“想做什么”。
+
+例如：
+
+- GET 更像读取
+- POST 更像新建或触发动作
+- PUT/PATCH 更像更新
+- DELETE 更像移除
+
+方法语义清晰，接口和调试都会更容易理解。
+`,
+            },
+            {
+                id: 'network-lv0-l4',
+                title: '4. 先学会读一条请求，再学更复杂的网络问题',
+                content: `
+# 读懂一条请求
+
+网络学习的第一步不是背很多协议缩写，而是能把一条真实请求读明白：
+
+- 发给谁
+- 带了什么
+- 为什么失败或成功
+- 返回内容为什么长这样
+
+这项能力会成为后面所有网络调试的起点。
+`,
+            },
+        ],
+        quizzes: [
+            {
+                id: 'network-lv0-q1',
+                question: '哪组信息最能代表一次 HTTP 请求报文的核心结构？',
+                options: ['method、path、headers、body', 'component、state、props、effect', 'thread、queue、retry、cron', 'token、role、policy、session'],
+                correctAnswer: 0,
+                explanation: 'HTTP 请求本质上就是 method、path、headers 和可选 body 组成的结构化报文。',
+                difficulty: 'Easy',
+            },
+            {
+                id: 'network-lv0-q2',
+                question: '为什么调试接口时不能只看 response body？',
+                options: ['因为 body 一定为空', '因为状态码和 headers 也携带了成功/失败与处理方式的信息', '因为浏览器不会显示 body', '因为 body 与网络无关'],
+                correctAnswer: 1,
+                explanation: '真正判断请求结果往往需要结合状态码、headers 和 body 一起看。',
+                difficulty: 'Medium',
+            },
+        ],
+    },
+    {
+        id: 'network-lv1',
+        level: 1,
+        title: 'Level 1: DNS 与域名系统',
+        description: '理解为什么输入一个域名就能找到目标服务器，学会把 DNS 当成“把名字翻译成地址”的分布式系统来看。',
+        topics: ['DNS', 'Resolver', 'A Record', 'CNAME', 'Propagation'],
+        keyConcepts: ['递归解析', '记录类型', '缓存', 'TTL', '传播延迟'],
+        mission: '解释一次域名解析是如何发生的，并能判断常见域名问题是配置错、缓存旧还是记录未传播。',
+        outcome: '能读懂 A、AAAA、CNAME 等常见记录，并能解释为什么 DNS 问题经常表现得“有时好有时坏”。',
+        checklist: [
+            '能解释域名解析和浏览器缓存不是同一件事',
+            '能区分 A record、AAAA record 和 CNAME 的作用',
+            '能理解 TTL 与传播延迟为什么会影响问题排查',
+        ],
+        resources: [
+            { name: 'DNS Explained', url: 'https://www.cloudflare.com/learning/dns/what-is-dns/' },
+            { name: 'DNS Records Overview', url: 'https://www.cloudflare.com/learning/dns/dns-records/' },
+        ],
+        lessons: [
+            {
+                id: 'network-lv1-l1',
+                title: '1. 域名系统是在做名字到地址的翻译',
+                content: `
+# 名字翻译系统
+
+人类更适合记域名，机器更适合找 IP。
+
+DNS 的核心作用，就是把：
+
+- \`app.example.com\`
+
+翻译成：
+
+- 某个可访问的 IP 地址
+
+它本质上是一套分布式查询系统，而不只是一个“配置页面”。
+`,
+            },
+            {
+                id: 'network-lv1-l2',
+                title: '2. 记录类型决定域名最终指向什么',
+                content: `
+# 常见记录
+
+最常见的几类记录包括：
+
+- **A / AAAA**: 直接指向 IPv4 / IPv6 地址
+- **CNAME**: 指向另一个域名
+- **MX**: 邮件服务相关
+
+理解记录类型，才能知道一个域名最后到底落在什么目标上。
+`,
+            },
+            {
+                id: 'network-lv1-l3',
+                title: '3. 为什么 DNS 问题常常带着缓存和延迟',
+                content: `
+# TTL 与传播
+
+DNS 不是每次都从权威源头重新问一遍，很多环节都会缓存结果。
+
+这就意味着：
+
+- 你改了记录，不会立刻全世界同步
+- 不同用户可能会在不同时间看到不同结果
+
+这就是 DNS 问题经常“我这边好了，你那边还没好”的原因。
+`,
+            },
+            {
+                id: 'network-lv1-l4',
+                title: '4. 排查 DNS 问题时，先问哪一层缓存还在生效',
+                content: `
+# 排查思路
+
+当域名解析不对时，你要先区分：
+
+- 记录本身有没有配错
+- 递归解析器是不是还缓存旧值
+- 本机或浏览器是不是还没刷新
+
+如果不分层，你会在错误的地方浪费很多时间。
+`,
+            },
+        ],
+        quizzes: [
+            {
+                id: 'network-lv1-q1',
+                question: 'CNAME 记录最接近下面哪种作用？',
+                options: ['直接写入数据库', '把一个域名别名指向另一个域名', '给请求添加认证 token', '让 HTTP 自动变成 HTTPS'],
+                correctAnswer: 1,
+                explanation: 'CNAME 的核心是把一个名字指向另一个名字，而不是直接给出 IP。',
+                difficulty: 'Easy',
+            },
+            {
+                id: 'network-lv1-q2',
+                question: '为什么 DNS 问题经常会出现“有人正常，有人还不正常”？',
+                options: ['因为 DNS 只在本地机器运行', '因为不同解析层和客户端缓存可能还没过期', '因为域名只能同时被一个人访问', '因为 DNS 不支持更新'],
+                correctAnswer: 1,
+                explanation: 'TTL 和多层缓存让 DNS 传播天然带有时间差。',
+                difficulty: 'Medium',
+            },
+        ],
+    },
+    {
+        id: 'network-lv2',
+        level: 2,
+        title: 'Level 2: TCP/IP 与 UDP',
+        description: '理解网络连接为什么需要端口、为什么有的传输强调可靠性、有的强调实时性，把 TCP 和 UDP 放回真实场景里看。',
+        topics: ['TCP', 'UDP', 'IP', 'Port', 'Latency'],
+        keyConcepts: ['连接', '可靠传输', '丢包', '顺序保证', '端口复用'],
+        mission: '解释一条网络连接如何建立，为什么不同业务会选择 TCP 或 UDP，以及延迟与可靠性如何取舍。',
+        outcome: '能区分 TCP 和 UDP 的典型使用场景，并能把端口、延迟、丢包这些概念串起来理解。',
+        checklist: [
+            '能解释 IP 地址与端口组合为什么才能定位具体服务',
+            '能说明 TCP 为什么更可靠但不总是最快',
+            '能区分实时语音/视频与网页请求在传输诉求上的差异',
+        ],
+        resources: [
+            { name: 'TCP vs UDP', url: 'https://www.cloudflare.com/learning/ddos/glossary/tcp-ip/' },
+            { name: 'MDN TCP Basics', url: 'https://developer.mozilla.org/en-US/docs/Glossary/TCP' },
+        ],
+        lessons: [
+            {
+                id: 'network-lv2-l1',
+                title: '1. IP 负责寻址，端口负责找到机器上的具体服务',
+                content: `
+# 地址与端口
+
+IP 地址只说明“这台机器是谁”，但一台机器上可能跑着很多服务。
+
+端口的作用，是进一步指向：
+
+- Web 服务
+- 数据库服务
+- 消息服务
+
+所以真正定位一条网络服务，往往需要 IP + Port 一起看。
+`,
+            },
+            {
+                id: 'network-lv2-l2',
+                title: '2. TCP 用额外成本换来可靠性与顺序',
+                content: `
+# TCP 的价值
+
+TCP 适合网页、接口、支付等业务，因为它通常提供：
+
+- 顺序保证
+- 重传机制
+- 可靠到达
+
+这些能力不是免费的，它们会带来握手、确认和等待的成本。
+`,
+            },
+            {
+                id: 'network-lv2-l3',
+                title: '3. UDP 更轻，但你要自己接受更多不确定性',
+                content: `
+# UDP 的取舍
+
+UDP 不强调连接与重传，因此更轻、更直接，也更适合：
+
+- 实时语音
+- 实时视频
+- 某些游戏同步
+
+但它的代价是：包可能丢、可能乱序，也不保证一定到达。
+`,
+            },
+            {
+                id: 'network-lv2-l4',
+                title: '4. 选协议是在选“最重要的那件事”',
+                content: `
+# 核心取舍
+
+如果你的业务最怕错，就更偏向可靠性；
+如果你的业务最怕迟，就更偏向实时性。
+
+TCP 和 UDP 的差别，不是“谁高级”，而是“谁更适合当前业务最重要的目标”。
+`,
+            },
+        ],
+        quizzes: [
+            {
+                id: 'network-lv2-q1',
+                question: '为什么定位一个网络服务通常不能只看 IP，还要看端口？',
+                options: ['因为一台机器上可能有多个服务同时监听', '因为 IP 不能联网', '因为端口只给前端使用', '因为 UDP 不支持 IP'],
+                correctAnswer: 0,
+                explanation: 'IP 定位机器，端口定位机器上的具体服务。',
+                difficulty: 'Easy',
+            },
+            {
+                id: 'network-lv2-q2',
+                question: '实时语音更常使用 UDP 的核心原因更接近哪项？',
+                options: ['因为 UDP 能自动加密', '因为 UDP 更强调低额外开销与实时性，即使允许少量丢包', '因为 UDP 不需要端口', '因为 UDP 一定比 TCP 更安全'],
+                correctAnswer: 1,
+                explanation: '实时业务通常更怕延迟而不是个别包的丢失。',
+                difficulty: 'Medium',
+            },
+        ],
+    },
+    {
+        id: 'network-lv3',
+        level: 3,
+        title: 'Level 3: TLS 与 HTTPS',
+        description: '理解为什么 HTTPS 不只是“加了个锁”，而是一套围绕证书、握手、加密与信任链建立起来的安全通信机制。',
+        topics: ['TLS', 'HTTPS', 'Certificate', 'Handshake', 'Trust Chain'],
+        keyConcepts: ['证书', '公钥与私钥', '握手协商', '身份验证', '信任链'],
+        mission: '解释 HTTPS 建立安全连接的关键步骤，并能看懂常见证书错误与混合内容问题。',
+        outcome: '能说明 HTTPS 为什么能防止窃听与篡改，并能初步判断证书错误到底是证书、域名还是信任链问题。',
+        checklist: [
+            '能解释 HTTP 和 HTTPS 的本质差别不只是端口不同',
+            '能说明证书在验证服务端身份里的作用',
+            '能理解混合内容为什么会破坏页面安全边界',
+        ],
+        resources: [
+            { name: 'How HTTPS Works', url: 'https://howhttps.works/' },
+            { name: 'MDN TLS', url: 'https://developer.mozilla.org/en-US/docs/Glossary/TLS' },
+        ],
+        lessons: [
+            {
+                id: 'network-lv3-l1',
+                title: '1. HTTPS 是 HTTP 跑在 TLS 保护之上',
+                content: `
+# HTTPS 的结构
+
+HTTPS 不是一种完全独立的新协议族，它更像是：
+
+- HTTP 的语义
+- 加上 TLS 的安全通道
+
+这样浏览器和服务端才能在传输内容前，先把安全通信这件事谈妥。
+`,
+            },
+            {
+                id: 'network-lv3-l2',
+                title: '2. 证书是在证明“你连到的真的是它”',
+                content: `
+# 证书的角色
+
+加密本身还不够，关键还要确认对方身份。
+
+证书的作用，是帮助浏览器判断：
+
+- 这个站点是否真的拥有这个域名对应的身份
+- 这个身份是否被信任机构签发和认可
+
+没有身份验证，加密可能仍然连错对象。
+`,
+            },
+            {
+                id: 'network-lv3-l3',
+                title: '3. TLS 握手是在协商如何安全说话',
+                content: `
+# 握手协商
+
+TLS 握手阶段通常要完成几件事：
+
+- 协商协议版本
+- 协商加密套件
+- 验证证书
+- 建立会话密钥
+
+只有这些都谈妥，后续 HTTP 内容才会在安全通道里传输。
+`,
+            },
+            {
+                id: 'network-lv3-l4',
+                title: '4. 证书错误和混合内容是两类常见信号',
+                content: `
+# 常见问题
+
+HTTPS 常见问题大致分两类：
+
+- **证书错误**: 站点身份链路有问题
+- **混合内容**: 安全页面里仍然加载了不安全资源
+
+两者都在提醒你：页面整体安全边界已经被削弱。
+`,
+            },
+        ],
+        quizzes: [
+            {
+                id: 'network-lv3-q1',
+                question: 'HTTPS 相比 HTTP 最核心多出来的能力更接近哪项？',
+                options: ['自动生成前端组件', '在 TLS 保护下传输并验证对端身份', '自动压缩所有图片', '绕过 DNS 解析'],
+                correctAnswer: 1,
+                explanation: 'HTTPS 的核心价值是通过 TLS 建立更安全的身份验证与加密通道。',
+                difficulty: 'Easy',
+            },
+            {
+                id: 'network-lv3-q2',
+                question: '为什么混合内容会被浏览器重点警告？',
+                options: ['因为 CSS 写得不好看', '因为安全页面中加载不安全资源会破坏整体安全边界', '因为混合内容一定会让 CPU 变慢', '因为混合内容与网络无关'],
+                correctAnswer: 1,
+                explanation: '一个 HTTPS 页面只要继续拉入 HTTP 资源，就等于把安全链条撕开了口子。',
+                difficulty: 'Medium',
+            },
+        ],
+    },
+    {
+        id: 'network-lv4',
+        level: 4,
+        title: 'Level 4: 浏览器网络性能',
+        description: '学习连接复用、HTTP/2、HTTP/3 与请求优先级，把网络性能从“请求数量”提升到“连接与调度效率”的视角。',
+        topics: ['HTTP/2', 'HTTP/3', 'Multiplexing', 'Priority', 'Waterfall'],
+        keyConcepts: ['连接复用', '多路复用', '队头阻塞', '优先级', '瀑布图分析'],
+        mission: '通过请求瀑布图分析页面慢在哪里，并解释连接层协议为什么会影响真实加载体验。',
+        outcome: '能借助 DevTools 瀑布图判断页面慢在排队、建立连接、下载还是资源调度策略。',
+        checklist: [
+            '能解释为什么现代协议要减少重复建连与排队成本',
+            '能通过瀑布图观察请求启动顺序与阻塞关系',
+            '能理解 HTTP/2 与 HTTP/3 主要是在连接层改进什么',
+        ],
+        resources: [
+            { name: 'HTTP/2 Explained', url: 'https://developer.mozilla.org/en-US/docs/Glossary/HTTP_2' },
+            { name: 'HTTP/3 Overview', url: 'https://developer.mozilla.org/en-US/docs/Glossary/HTTP_3' },
+        ],
+        lessons: [
+            {
+                id: 'network-lv4-l1',
+                title: '1. 网络性能不只是“请求越少越好”',
+                content: `
+# 更高层的性能视角
+
+减少请求数量当然重要，但现代页面慢很多时候不只是“请求太多”，还包括：
+
+- 建连成本
+- 排队等待
+- 资源优先级不合理
+- 大资源阻塞关键资源
+
+所以网络性能分析必须看连接和调度。
+`,
+            },
+            {
+                id: 'network-lv4-l2',
+                title: '2. HTTP/2 让多个请求更好地共享同一连接',
+                content: `
+# HTTP/2 的价值
+
+HTTP/2 的一个核心优势，是允许多个请求在同一连接上更高效地并行传输。
+
+这减少了：
+
+- 重复建连成本
+- 某些场景下的排队等待
+
+也让资源调度从“每个请求各管各的”变得更协同。
+`,
+            },
+            {
+                id: 'network-lv4-l3',
+                title: '3. HTTP/3 在更底层继续优化连接体验',
+                content: `
+# HTTP/3 的方向
+
+HTTP/3 继续在连接层做优化，目标通常还是：
+
+- 更快恢复
+- 更少阻塞
+- 在复杂网络环境下更稳
+
+你不一定要背所有细节，但要知道它是在为真实网络条件服务。
+`,
+            },
+            {
+                id: 'network-lv4-l4',
+                title: '4. DevTools 瀑布图是判断瓶颈位置的重要入口',
+                content: `
+# 瀑布图能力
+
+看网络瀑布图时，你应该能分辨：
+
+- 哪些请求启动太晚
+- 哪些请求下载太久
+- 哪些资源阻塞关键渲染
+
+只有先知道慢在哪里，后面的 preload、压缩、拆分和缓存策略才有意义。
+`,
+            },
+        ],
+        quizzes: [
+            {
+                id: 'network-lv4-q1',
+                question: '为什么现代网络性能分析不能只盯“请求数量”？',
+                options: ['因为请求数量与网络完全无关', '因为建连、排队和资源优先级也会显著影响加载体验', '因为 HTTP/2 不允许多个请求', '因为图片从不影响瀑布图'],
+                correctAnswer: 1,
+                explanation: '真实加载性能常由连接成本、请求调度和阻塞关系共同决定。',
+                difficulty: 'Easy',
+            },
+            {
+                id: 'network-lv4-q2',
+                question: 'HTTP/2 带来的关键改进更接近下面哪项？',
+                options: ['让浏览器不需要 DNS', '让多个请求更高效地共享连接', '让所有接口都自动缓存一年', '让 HTML 不再需要 CSS'],
+                correctAnswer: 1,
+                explanation: 'HTTP/2 的核心改进之一就是更高效的多路复用与连接共享。',
+                difficulty: 'Medium',
+            },
+        ],
+    },
     createPlaceholderStage('network', 5, 'CDN 与缓存头', '学习边缘缓存、Cache-Control 和失效。', ['CDN', 'Cache-Control', 'Edge'], '设计静态资源缓存策略。', '能解释浏览器缓存和 CDN 缓存的区别。'),
     createPlaceholderStage('network', 6, '代理、反向代理与负载均衡', '理解请求转发、网关和流量分配。', ['Proxy', 'Reverse Proxy', 'Load Balancer'], '画出反向代理后的服务拓扑。', '能解释 Nginx、网关和负载均衡的角色。'),
     createPlaceholderStage('network', 7, '实时协议', '学习 WebSocket、SSE 和长轮询。', ['WebSocket', 'SSE', 'Realtime'], '实现或设计一个实时消息通道。', '能选择适合业务场景的实时通信方案。'),
