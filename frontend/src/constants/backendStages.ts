@@ -64,6 +64,7 @@ Node.js 不是浏览器，它是一个让 JavaScript 可以跑在服务端的运
         {
             id: 'backend-lv0-l3',
             title: '3. HTTP 请求、响应与 JSON API',
+            labId: 'http-request-lab',
             content: `
 # HTTP 请求、响应与 JSON API
 

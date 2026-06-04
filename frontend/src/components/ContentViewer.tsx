@@ -63,6 +63,7 @@ const LAB_COMPONENTS: Record<LabId, React.LazyExoticComponent<React.ComponentTyp
     'csrf-lab': lazyNamed(() => import('./labs/CSRFLab'), 'CSRFLab'),
     'csp-lab': lazyNamed(() => import('./labs/CSPLab'), 'CSPLab'),
     'node-event-loop': lazyNamed(() => import('./labs/NodeEventLoopLab'), 'NodeEventLoopLab'),
+    'http-request-lab': lazyNamed(() => import('./labs/HttpRequestLab'), 'HttpRequestLab'),
     'stream-lab': lazyNamed(() => import('./labs/StreamLab'), 'StreamLab'),
     'middleware-lab': lazyNamed(() => import('./labs/MiddlewareLab'), 'MiddlewareLab'),
     'metric-trend-lab': lazyNamed(() => import('./labs/MetricTrendLab'), 'MetricTrendLab'),
