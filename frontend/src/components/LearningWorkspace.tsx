@@ -1,4 +1,4 @@
-import type { Lesson, LearningStage } from '@/constants/learningPath';
+import type { Lesson, LearningStage, LearningTrack } from '@/constants/learningPath';
 import { ContentViewer } from './ContentViewer';
 import { ModuleList } from './ModuleList';
 import { RouteShell } from './RouteShell';
@@ -7,6 +7,7 @@ type LearningWorkspaceProps = {
   activeLesson: Lesson;
   activeLessonIndex: number;
   activeStage: LearningStage;
+  activeTrack: LearningTrack;
   goToNextStage: () => void;
   hasNextStage: boolean;
   isLessonComplete: boolean;
@@ -23,6 +24,7 @@ export const LearningWorkspace = ({
   activeLesson,
   activeLessonIndex,
   activeStage,
+  activeTrack,
   goToNextStage,
   hasNextStage,
   isLessonComplete,
@@ -39,6 +41,7 @@ export const LearningWorkspace = ({
       <div className="flex flex-col lg:flex-row gap-4 xl:gap-6 h-full">
         <ModuleList
           activeStage={activeStage}
+          activeTrack={activeTrack}
           activeLessonIndex={activeLessonIndex}
           setActiveLessonIndex={onSelectLesson}
           completedLessons={completedLessons}
@@ -49,6 +52,7 @@ export const LearningWorkspace = ({
         <ContentViewer
           activeLesson={activeLesson}
           activeStage={activeStage}
+          activeTrack={activeTrack}
           activeLessonIndex={activeLessonIndex}
           setActiveLessonIndex={onSelectLesson}
           goToNextStage={goToNextStage}

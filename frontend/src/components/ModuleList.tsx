@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { FileText, CheckCircle2, Trophy } from 'lucide-react';
-import type { LearningStage } from '../constants/learningPath';
+import type { LearningStage, LearningTrack } from '../constants/learningPath';
 
 interface ModuleListProps {
     activeStage: LearningStage;
+    activeTrack: LearningTrack;
     activeLessonIndex: number;
     setActiveLessonIndex: (index: number) => void;
     completedLessons: Record<string, boolean>;
@@ -13,6 +14,7 @@ interface ModuleListProps {
 
 export const ModuleList: React.FC<ModuleListProps> = ({
     activeStage,
+    activeTrack,
     activeLessonIndex,
     setActiveLessonIndex,
     completedLessons,
@@ -71,6 +73,9 @@ export const ModuleList: React.FC<ModuleListProps> = ({
     const dockClass = dockMode === 'fixed'
         ? `lg:fixed ${topOffsetClass} lg:z-30`
         : 'relative';
+    const moduleLabel = activeTrack.id === 'backend' ? 'Service Map' : 'Modules';
+    const unitLabel = activeTrack.id === 'backend' ? 'LESSONS' : 'UNITS';
+    const examLabel = activeTrack.id === 'backend' ? 'Service Check' : 'Level Exam';
 
     return (
         <div
@@ -105,9 +110,9 @@ export const ModuleList: React.FC<ModuleListProps> = ({
                 <h3 className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em] mb-4 px-2 flex items-center justify-between">
                     <div className="flex items-center gap-2">
                         <FileText size={14} className="text-accent-purple/50" />
-                        Modules
+                        {moduleLabel}
                     </div>
-                    <span className="bg-white/5 px-2 py-0.5 rounded text-[9px] border border-white/5 shadow-[0_0_14px_rgba(168,85,247,0.08)]">{activeStage.lessons.length} UNITS</span>
+                    <span className="bg-white/5 px-2 py-0.5 rounded text-[9px] border border-white/5 shadow-[0_0_14px_rgba(168,85,247,0.08)]">{activeStage.lessons.length} {unitLabel}</span>
                 </h3>
 
                 <ul className="space-y-1.5 grow min-h-0 max-h-[50vh] lg:max-h-none overflow-y-auto pr-1 -mr-1 custom-scrollbar">
@@ -158,7 +163,7 @@ export const ModuleList: React.FC<ModuleListProps> = ({
                     className="w-full mt-4 p-3.5 shine-sweep bg-accent-purple hover:bg-purple-500 active:scale-[0.98] text-white rounded-2xl font-black text-xs uppercase tracking-widest transition-all shadow-2xl shadow-purple-900/40 hover:shadow-purple-700/50 flex items-center justify-center gap-2 group overflow-hidden"
                 >
                     <Trophy size={16} className="transition-transform group-hover:rotate-12" />
-                    Level Exam
+                    {examLabel}
                 </button>
             </div>
         </div>

@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { ArrowRight, BookOpen, Braces, Cpu, Database, Globe2, Layers3, Palette, ShieldAlert, Terminal, Trophy } from 'lucide-react';
+import { ArrowRight, BookOpen, Braces, Cable, Cpu, Database, Globe2, KeyRound, Layers3, Palette, Radar, ServerCog, ShieldAlert, Terminal, Trophy, Workflow } from 'lucide-react';
 import type { LearningStage, LearningTrack } from '../constants/learningPath';
 
 interface CourseAtlasHomeProps {
@@ -14,7 +14,25 @@ interface CourseAtlasHomeProps {
     onSelectStage: (index: number, trackId?: LearningTrack['id']) => void;
 }
 
-const getLevelIcon = (level: number) => {
+const getStageDisplayTitle = (title: string) => title.replace(/^Level\s+\d+:\s*/, '');
+
+const getLevelIcon = (trackId: LearningTrack['id'], level: number) => {
+    if (trackId === 'backend') {
+        switch (level) {
+            case 0: return <Terminal size={18} />;
+            case 1: return <Braces size={18} />;
+            case 2: return <KeyRound size={18} />;
+            case 3: return <Database size={18} />;
+            case 4: return <ServerCog size={18} />;
+            case 5: return <Workflow size={18} />;
+            case 6: return <Cable size={18} />;
+            case 7: return <Radar size={18} />;
+            case 8: return <ShieldAlert size={18} />;
+            case 9: return <Trophy size={18} />;
+            default: return <Database size={18} />;
+        }
+    }
+
     switch (level) {
         case 0: return <Palette size={18} />;
         case 1: return <Terminal size={18} />;
@@ -53,7 +71,9 @@ export const CourseAtlasHome: React.FC<CourseAtlasHomeProps> = ({
     const completedCount = Object.values(completedLessons).filter(Boolean).length;
     const ctaStageIndex = completedCount === 0 ? 0 : activeStageIndex;
     const ctaStage = stages[ctaStageIndex] ?? stages[0];
-    const ctaLabel = completedCount === 0 ? 'Start Level 0' : `Continue Level ${ctaStage.level}`;
+    const ctaLabel = completedCount === 0
+        ? `Start ${activeTrack.shortTitle} Level 0`
+        : `Continue ${activeTrack.shortTitle} Level ${ctaStage.level}`;
 
     useEffect(() => {
         const ctx = gsap.context(() => {
@@ -299,11 +319,11 @@ export const CourseAtlasHome: React.FC<CourseAtlasHomeProps> = ({
                                 >
                                     <div className="flex items-center gap-3">
                                         <div className={`grid h-10 w-10 shrink-0 place-items-center rounded-2xl transition-all ${isActive ? 'bg-accent-purple text-white shadow-[0_0_18px_rgba(168,85,247,0.48)]' : 'bg-white/5 text-gray-500 group-hover:text-accent-purple'}`}>
-                                            {getLevelIcon(stage.level)}
+                                            {getLevelIcon(activeTrack.id, stage.level)}
                                         </div>
                                         <div className="min-w-0 flex-1">
                                             <div className="text-[9px] font-black uppercase tracking-widest opacity-60">LVL {stage.level}</div>
-                                            <div className="truncate text-sm font-black text-white">{stage.title.split(' - ')[1] || stage.title}</div>
+                                            <div className="truncate text-sm font-black text-white">{getStageDisplayTitle(stage.title)}</div>
                                         </div>
                                     </div>
                                     <div className="mt-4 flex items-center justify-between text-[10px] font-black text-gray-500">

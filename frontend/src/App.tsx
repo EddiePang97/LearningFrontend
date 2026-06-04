@@ -100,6 +100,7 @@ function App() {
       activeLesson={activeLesson}
       activeLessonIndex={resolvedLessonIndex}
       activeStage={activeStage}
+      activeTrack={activeTrack}
       completedLessons={completedLessons}
       goToNextStage={handleNextStage}
       hasNextStage={activeStageIndex < activeTrack.stages.length - 1}

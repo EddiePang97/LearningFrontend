@@ -1,12 +1,13 @@
 import React, { lazy, Suspense } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
-import type { Lesson, LearningStage } from '../constants/learningPath';
+import type { Lesson, LearningStage, LearningTrack } from '../constants/learningPath';
 import { CheckCircle2, ChevronRight, GraduationCap } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 
 interface ContentViewerProps {
     activeLesson: Lesson;
     activeStage: LearningStage;
+    activeTrack: LearningTrack;
     activeLessonIndex: number;
     setActiveLessonIndex: (index: number) => void;
     goToNextStage: () => void;
@@ -86,6 +87,7 @@ const LAB_COMPONENTS: Record<LabId, React.LazyExoticComponent<React.ComponentTyp
 export const ContentViewer: React.FC<ContentViewerProps> = ({
     activeLesson,
     activeStage,
+    activeTrack,
     activeLessonIndex,
     setActiveLessonIndex,
     goToNextStage,
@@ -97,6 +99,11 @@ export const ContentViewer: React.FC<ContentViewerProps> = ({
 }) => {
     const LabComponent = activeLesson.labId ? LAB_COMPONENTS[activeLesson.labId] : null;
     const isLastLesson = activeLessonIndex === totalLessons - 1;
+    const stageLabel = activeTrack.id === 'backend' ? 'Backend Level' : 'Stage';
+    const unitLabel = activeTrack.id === 'backend' ? 'Lesson' : 'Unit';
+    const missionLabel = activeTrack.id === 'backend' ? 'Service Mission' : 'Level Mission';
+    const checklistLabel = activeTrack.id === 'backend' ? 'Readiness Checklist' : 'Completion Checklist';
+    const nextLabel = isLastLesson ? (hasNextStage ? 'Next Level' : 'Level Complete') : activeTrack.id === 'backend' ? 'Next Lesson' : 'Next Unit';
 
     return (
         <div className="grow glass-card premium-card overflow-hidden flex flex-col min-h-[70vh] relative shadow-[0_32px_64px_-16px_rgba(0,0,0,0.5)]">
@@ -122,11 +129,11 @@ export const ContentViewer: React.FC<ContentViewerProps> = ({
                                 <header className="mb-8 xl:mb-12">
                                     <div className="flex items-center gap-3 mb-6">
                                         <span className="px-3 py-1 bg-accent-purple/10 border border-accent-purple/25 text-accent-purple rounded-full text-[10px] font-black tracking-[0.2em] uppercase shadow-[0_0_24px_rgba(168,85,247,0.18)]">
-                                            Stage {activeStage.level}
+                                            {stageLabel} {activeStage.level}
                                         </span>
                                         <div className="h-px w-8 bg-white/10" />
                                         <span className="text-[10px] font-black text-gray-500 uppercase tracking-[0.2em]">
-                                            Unit {activeLessonIndex + 1} of {totalLessons}
+                                            {unitLabel} {activeLessonIndex + 1} of {totalLessons}
                                         </span>
                                     </div>
                                     <h2 className="text-3xl md:text-5xl font-black font-display text-white leading-[1.1] tracking-tight drop-shadow-[0_0_24px_rgba(168,85,247,0.16)]">
@@ -137,7 +144,7 @@ export const ContentViewer: React.FC<ContentViewerProps> = ({
                                 <section className="mb-8 grid gap-3 rounded-4xl border border-white/10 bg-white/4 p-4 md:grid-cols-[1.1fr_0.9fr] md:p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
                                     <div>
                                         <p className="text-[10px] font-black uppercase tracking-[0.24em] text-accent-purple">
-                                            Level Mission
+                                            {missionLabel}
                                         </p>
                                         <p className="mt-3 text-sm font-bold leading-6 text-white">
                                             {activeStage.mission}
@@ -148,7 +155,7 @@ export const ContentViewer: React.FC<ContentViewerProps> = ({
                                     </div>
                                     <div className="rounded-3xl border border-white/7 bg-black/20 p-4">
                                         <p className="text-[10px] font-black uppercase tracking-[0.24em] text-gray-500">
-                                            Completion Checklist
+                                            {checklistLabel}
                                         </p>
                                         <ul className="mt-3 space-y-2.5">
                                             {activeStage.checklist.map(item => (
@@ -250,7 +257,7 @@ export const ContentViewer: React.FC<ContentViewerProps> = ({
                         className="flex items-center gap-2.5 px-6 py-3 rounded-2xl text-sm font-black text-accent-purple hover:text-white hover:bg-accent-purple/10 disabled:opacity-20 transition-all duration-300 group"
                     >
                         <span className="hidden sm:inline tracking-widest uppercase text-xs">
-                            {isLastLesson ? (hasNextStage ? 'Next Level' : 'Level Complete') : 'Next Unit'}
+                            {nextLabel}
                         </span>
                         <ChevronRight size={20} className="transition-transform group-hover:translate-x-1" />
                     </button>
