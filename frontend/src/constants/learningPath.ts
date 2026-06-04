@@ -429,9 +429,326 @@ const FULLSTACK_STAGES: LearningStage[] = [
             },
         ],
     },
-    createPlaceholderStage('fullstack', 3, '表单、校验与错误状态', '处理表单输入、服务端校验和用户反馈。', ['Form', 'Validation', 'Error State'], '构建一个可靠提交的复杂表单。', '能设计前后端一致的校验和错误展示。'),
-    createPlaceholderStage('fullstack', 4, '登录态与权限界面', '把 auth 能力贯穿 UI、API 和路由。', ['Auth UI', 'Protected Route', 'RBAC'], '实现角色化的应用体验。', '能让不同角色看到正确的数据和操作。'),
-    createPlaceholderStage('fullstack', 5, '支付与订阅流程', '学习订单、支付状态、Webhook 和订阅生命周期。', ['Payment', 'Webhook', 'Subscription'], '设计一个可追踪的支付流程。', '能解释支付为什么必须以后端状态为准。'),
+    {
+        id: 'fullstack-lv3',
+        level: 3,
+        title: 'Level 3: 表单、校验与错误状态',
+        description: '把输入、校验、提交、错误提示和回填状态串起来，让复杂表单在前后端协作下仍然可靠。',
+        topics: ['Form', 'Validation', 'Error State', 'Submission', 'Recovery'],
+        keyConcepts: ['双层校验', '字段级错误', '提交状态', '回填策略'],
+        mission: '构建一个可靠提交的复杂表单，让前端体验、后端校验和错误反馈保持一致。',
+        outcome: '能设计前后端一致的校验模型，并处理提交中、失败后和重试时的界面状态。',
+        checklist: [
+            '能区分前端即时校验和后端最终校验的职责',
+            '能设计字段级错误与全局错误的展示方式',
+            '能说明提交失败后数据该如何保留、回填或重试',
+        ],
+        resources: [
+            { name: 'React Forms Guide', url: 'https://react.dev/reference/react-dom/components/input' },
+            { name: 'Zod Documentation', url: 'https://zod.dev/' },
+        ],
+        lessons: [
+            {
+                id: 'fullstack-lv3-l1',
+                title: '1. 复杂表单不是一堆 input 拼起来',
+                content: `
+# 复杂表单的本质
+
+复杂表单真正难的地方，不是输入框数量，而是状态很多：
+
+- 初始值
+- 用户修改值
+- 本地校验结果
+- 服务端返回错误
+- 提交中状态
+- 提交成功后的重置或跳转
+
+如果这些状态没有提前设计，表单很快就会变得又脆又乱。
+`,
+            },
+            {
+                id: 'fullstack-lv3-l2',
+                title: '2. 前端校验快，后端校验准',
+                content: `
+# 双层校验
+
+前端校验适合做：
+
+- 必填提醒
+- 长度范围
+- 基础格式检查
+
+后端校验必须负责：
+
+- 最终业务规则
+- 权限相关限制
+- 并发或唯一性冲突
+
+全栈表单可靠的关键，是让这两层各司其职，而不是互相替代。
+`,
+            },
+            {
+                id: 'fullstack-lv3-l3',
+                title: '3. 字段级错误与全局错误要分开',
+                content: `
+# 错误分层
+
+表单错误并不都属于同一类：
+
+- 某个字段格式不对：字段级错误
+- 提交权限不足：全局错误
+- 服务临时不可用：系统错误
+
+如果所有错误都挤在一个 toast 或一条 message 里，用户几乎不知道该改哪里。
+`,
+            },
+            {
+                id: 'fullstack-lv3-l4',
+                title: '4. 提交失败后的恢复体验',
+                content: `
+# 失败后的恢复
+
+提交失败不是终点，真正的体验差异在于：
+
+- 用户输入有没有丢
+- 错误信息是否可理解
+- 能不能直接重试
+- 成功后是否正确清理状态
+
+恢复体验设计得好，复杂表单也可以让人愿意继续完成。
+`,
+            },
+        ],
+        quizzes: [
+            {
+                id: 'fullstack-lv3-q1',
+                question: '为什么复杂表单必须同时考虑前端校验和后端校验？',
+                options: ['因为这样代码会更多', '因为前端负责即时体验，后端负责最终可信业务约束', '因为后端不能返回错误', '因为这样就不需要 loading 状态'],
+                correctAnswer: 1,
+                explanation: '前端提升交互体验，后端守住真实业务边界，两层都不可缺。',
+                difficulty: 'Easy',
+            },
+            {
+                id: 'fullstack-lv3-q2',
+                question: '下面哪种最适合作为字段级错误展示？',
+                options: ['接口 500 时显示“系统异常”', 'title 为空时在 title 输入框附近提示 required', '用户无权限时弹一个字段提示', '数据库宕机时高亮所有输入框'],
+                correctAnswer: 1,
+                explanation: '字段级错误应直接对应某个具体输入项，帮助用户就地修正。',
+                difficulty: 'Medium',
+            },
+        ],
+    },
+    {
+        id: 'fullstack-lv4',
+        level: 4,
+        title: 'Level 4: 登录态与权限界面',
+        description: '把 auth 能力贯穿 UI、API 和路由，理解登录态恢复、受保护路由和不同角色下的界面差异。',
+        topics: ['Auth UI', 'Protected Route', 'Session', 'RBAC', 'Role-aware UX'],
+        keyConcepts: ['登录态恢复', '受保护页面', '角色差异化视图', '权限前置判断'],
+        mission: '实现角色化的应用体验，让不同用户登录后看到正确的页面、操作与错误提示。',
+        outcome: '能让不同角色看到正确的数据和操作，并让前端权限体验与后端真实授权保持一致。',
+        checklist: [
+            '能说明登录态在页面刷新后如何恢复',
+            '能区分“未登录”与“已登录但无权限”的前端处理',
+            '能让导航、按钮和页面内容随着角色变化而变化',
+        ],
+        resources: [
+            { name: 'Authentication Patterns for SPAs', url: 'https://developer.okta.com/blog/2022/07/06/spa-web-security-csrf-xss' },
+            { name: 'React Router Protected Routes', url: 'https://reactrouter.com/en/main/start/overview' },
+        ],
+        lessons: [
+            {
+                id: 'fullstack-lv4-l1',
+                title: '1. 登录态不只是一个 token',
+                content: `
+# 登录态恢复
+
+从全栈角度看，登录态至少涉及：
+
+- 浏览器如何保存凭证
+- 页面刷新后如何恢复用户身份
+- 凭证失效后如何退出或重定向
+
+如果只把登录态理解成“存一个 token”，很快就会在刷新、失效和跨页面体验上踩坑。
+`,
+            },
+            {
+                id: 'fullstack-lv4-l2',
+                title: '2. 受保护路由与页面入口控制',
+                content: `
+# 路由保护
+
+不是每个页面都应该对所有人开放。
+
+前端至少要处理：
+
+- 未登录用户重定向
+- 已登录用户访问公开页时的跳转策略
+- 加载用户资料前的中间状态
+
+受保护路由的价值，是把“谁可以进来”先在入口层控制住。
+`,
+            },
+            {
+                id: 'fullstack-lv4-l3',
+                title: '3. 角色差异化界面',
+                content: `
+# 角色差异化
+
+同一个页面，不同角色看到的界面可能完全不一样：
+
+- student 只能查看
+- editor 可以编辑
+- admin 可以执行高风险操作
+
+这不仅影响按钮显示，还影响导航结构、空状态提示和默认入口。
+`,
+            },
+            {
+                id: 'fullstack-lv4-l4',
+                title: '4. 权限错误的前端表达',
+                content: `
+# 权限错误表达
+
+权限问题不能一律表现成“页面坏了”。
+
+前端需要明确区分：
+
+- 未登录：引导登录
+- 已登录但无权限：给出权限边界解释
+- 资源不存在：正常 404 语义
+
+把这些状态表达清楚，用户和团队都更容易理解系统行为。
+`,
+            },
+        ],
+        quizzes: [
+            {
+                id: 'fullstack-lv4-q1',
+                question: '前端处理权限时，哪种区分最关键？',
+                options: ['按钮颜色和字体大小', '未登录 与 已登录但无权限', '使用 JWT 还是 Session', '使用浅色主题还是深色主题'],
+                correctAnswer: 1,
+                explanation: '这两类状态对用户提示、跳转和恢复动作都完全不同。',
+                difficulty: 'Easy',
+            },
+            {
+                id: 'fullstack-lv4-q2',
+                question: '为什么角色差异化界面不应只停留在“隐藏按钮”？',
+                options: ['因为按钮本来就不重要', '因为导航、页面内容和默认入口也会随角色变化', '因为后端会自动生成页面', '因为这样就不需要后端授权'],
+                correctAnswer: 1,
+                explanation: '角色差异会影响整个用户流，而不仅仅是某个局部操作按钮。',
+                difficulty: 'Medium',
+            },
+        ],
+    },
+    {
+        id: 'fullstack-lv5',
+        level: 5,
+        title: 'Level 5: 支付与订阅流程',
+        description: '学习订单、支付状态、Webhook 和订阅生命周期，让“钱的状态”在前后端之间保持一致。',
+        topics: ['Payment', 'Order', 'Webhook', 'Subscription', 'Billing State'],
+        keyConcepts: ['支付状态机', '服务端真相', '异步确认', '账单生命周期'],
+        mission: '设计一个可追踪的支付流程，解释前端、后端、支付平台和 webhook 之间如何协作。',
+        outcome: '能解释支付为什么必须以后端状态为准，并能说清支付成功、失败、超时和重复回调时系统该如何表现。',
+        checklist: [
+            '能画出支付发起、确认、回调和状态更新的完整链路',
+            '能解释为什么支付结果不能只看前端跳转页面',
+            '能区分一次性支付与订阅续费的状态差异',
+        ],
+        resources: [
+            { name: 'Stripe Payment Lifecycle', url: 'https://docs.stripe.com/payments/payment-intents' },
+            { name: 'Webhook Best Practices', url: 'https://docs.stripe.com/webhooks' },
+        ],
+        lessons: [
+            {
+                id: 'fullstack-lv5-l1',
+                title: '1. 支付不是一个按钮，而是一条状态机',
+                content: `
+# 支付状态机
+
+支付真正复杂的地方，不是“点一下支付”，而是状态会流动：
+
+- created
+- requires_payment
+- processing
+- succeeded
+- failed
+- refunded
+
+如果没有状态机思维，支付流程很容易在前后端之间对不上。
+`,
+            },
+            {
+                id: 'fullstack-lv5-l2',
+                title: '2. 为什么支付结果必须以后端为准',
+                content: `
+# 后端真相
+
+用户在支付页看到“成功返回”并不等于系统就一定成功入账。
+
+真正可靠的支付确认，通常依赖：
+
+- 支付平台返回结果
+- 后端记录订单状态
+- webhook 异步确认
+
+前端页面更像“反馈窗口”，而不是最终账务真相。
+`,
+            },
+            {
+                id: 'fullstack-lv5-l3',
+                title: '3. Webhook：让异步确认落回系统',
+                content: `
+# Webhook
+
+支付流程常常跨多个系统，因此前端跳转完成后，后端仍然需要一个稳定入口接收平台回调。
+
+Webhook 的职责通常包括：
+
+- 验证来源
+- 幂等处理
+- 更新支付或订阅状态
+- 触发后续业务流程
+
+没有 webhook，全栈支付链路通常只完成了一半。
+`,
+            },
+            {
+                id: 'fullstack-lv5-l4',
+                title: '4. 订阅生命周期与账单变更',
+                content: `
+# 订阅生命周期
+
+订阅类产品不只关心“第一次有没有支付成功”，还关心：
+
+- 续费
+- 升降级
+- 宽限期
+- 取消与恢复
+
+这意味着你的前端展示、后端权限和账单状态都必须跟着生命周期一起变化。
+`,
+            },
+        ],
+        quizzes: [
+            {
+                id: 'fullstack-lv5-q1',
+                question: '为什么支付系统通常强调“以后端状态为准”？',
+                options: ['因为前端不能显示成功页', '因为支付结果往往需要服务端记录与异步回调共同确认', '因为数据库不能存订单', '因为这样就不需要用户登录'],
+                correctAnswer: 1,
+                explanation: '支付是跨系统状态流，前端页面只能展示结果，最终真相仍以后端和支付平台协作为准。',
+                difficulty: 'Easy',
+            },
+            {
+                id: 'fullstack-lv5-q2',
+                question: 'Webhook 在支付链路里的核心价值更接近哪项？',
+                options: ['美化支付按钮样式', '把异步确认事件稳定地送回业务系统', '替代数据库持久化', '减少所有接口的状态码种类'],
+                correctAnswer: 1,
+                explanation: 'Webhook 是外部支付平台把关键异步状态带回你系统的重要桥梁。',
+                difficulty: 'Medium',
+            },
+        ],
+    },
     createPlaceholderStage('fullstack', 6, '测试策略', '组织单元测试、集成测试和 E2E 测试。', ['Unit Test', 'Integration Test', 'E2E'], '为核心业务路径补测试。', '能判断不同风险应该用哪种测试覆盖。'),
     createPlaceholderStage('fullstack', 7, '部署、环境与 CI/CD', '管理环境变量、构建、发布和回滚。', ['Deploy', 'Environment', 'CI/CD'], '把应用稳定发布到线上。', '能解释 dev、staging、production 的差异。'),
     createPlaceholderStage('fullstack', 8, '跨端性能预算', '同时优化前端加载和后端响应。', ['Performance Budget', 'Latency', 'Bundle'], '建立端到端性能指标。', '能定位性能瓶颈是在客户端、网络还是服务端。'),
