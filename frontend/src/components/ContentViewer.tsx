@@ -72,6 +72,7 @@ const LAB_COMPONENTS: Record<LabId, React.LazyExoticComponent<React.ComponentTyp
     'rbac-lab': lazyNamed(() => import('./labs/RbacLab'), 'RbacLab'),
     'cache-aside-lab': lazyNamed(() => import('./labs/CacheAsideLab'), 'CacheAsideLab'),
     'signed-url-lab': lazyNamed(() => import('./labs/SignedUrlLab'), 'SignedUrlLab'),
+    'rate-limit-lab': lazyNamed(() => import('./labs/RateLimitLab'), 'RateLimitLab'),
     'big-o-lab': lazyNamed(() => import('./labs/BigOLab'), 'BigOLab'),
     'sorting-lab': lazyNamed(() => import('./labs/SortingLab'), 'SortingLab'),
     'tree-lab': lazyNamed(() => import('./labs/TreeLab'), 'TreeLab'),

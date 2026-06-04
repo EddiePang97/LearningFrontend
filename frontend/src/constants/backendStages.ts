@@ -974,7 +974,7 @@ const backendLv8: LearningStage = {
         {
             id: 'backend-lv8-l3',
             title: '3. 限流、密钥与最小权限',
-            labId: 'csrf-lab',
+            labId: 'rate-limit-lab',
             content: `
 # 限流、密钥与最小权限
 
