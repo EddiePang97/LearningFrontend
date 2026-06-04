@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Globe, User, MousePointerClick, Sparkles } from 'lucide-react';
+import { LabFrame } from './LabFrame';
 
 export const ThisLab = () => {
     const [activeRule, setActiveRule] = useState<string | null>(null);
@@ -41,7 +42,11 @@ export const ThisLab = () => {
     ];
 
     return (
-        <div className="flex w-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-[#0f0f11] p-4 font-mono text-sm shadow-2xl md:min-h-[560px] md:p-8">
+        <LabFrame
+            className="md:min-h-[560px] md:p-8"
+            icon={MousePointerClick}
+            title='"this" Binding Rules'
+        >
             <h3 className="mb-8 text-center text-xl font-bold uppercase tracking-widest text-white md:mb-12">
                 "this" Binding Rules
             </h3>
@@ -100,6 +105,6 @@ export const ThisLab = () => {
                     )}
                 </div>
             </div>
-        </div>
+        </LabFrame>
     );
 };

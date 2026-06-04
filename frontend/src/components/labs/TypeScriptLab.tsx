@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FileCode, AlertTriangle, CheckCircle, Smartphone, User, Shield } from 'lucide-react';
+import { LabFrame } from './LabFrame';
 
 export const TypeScriptLab = () => {
     const [idType, setIdType] = useState<'number' | 'string'>('string');
@@ -29,14 +30,14 @@ export const TypeScriptLab = () => {
     const isSuccess = errors.length === 0;
 
     return (
-        <div className="relative flex w-full flex-col gap-6 overflow-hidden rounded-3xl border border-white/10 bg-[#0f0f11] p-4 font-mono text-sm shadow-2xl md:min-h-[600px] md:flex-row md:gap-8 md:p-6">
+        <LabFrame
+            className="relative gap-6 md:min-h-[600px] md:flex-row md:gap-8"
+            icon={FileCode}
+            title="TypeScript Playground"
+        >
 
             {/* Code Editor Panel */}
             <div className="flex-1 flex flex-col gap-4">
-                <div className="flex items-center gap-2 mb-2 text-gray-400 uppercase tracking-widest text-xs font-bold">
-                    <FileCode size={16} /> TypeScript Playground
-                </div>
-
                 <div className="group relative flex-grow overflow-hidden rounded-2xl border border-white/10 bg-black/50 p-4 md:p-6">
                     <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-accent-purple opacity-30" />
 
@@ -208,6 +209,6 @@ export const TypeScriptLab = () => {
                     </AnimatePresence>
                 </div>
             </div>
-        </div>
+        </LabFrame>
     );
 };

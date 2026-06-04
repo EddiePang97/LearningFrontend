@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback, memo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Terminal, Play, Square, Settings, FileJson } from 'lucide-react';
+import { LabFrame } from './LabFrame';
 
 interface Log {
     id: string;
@@ -76,7 +77,11 @@ export const HooksLab = () => {
     }, [logs]);
 
     return (
-        <div className="relative flex w-full flex-col overflow-hidden rounded-3xl border border-white/10 bg-[#0f0f11] p-4 font-mono text-sm shadow-2xl md:min-h-[600px] md:p-6">
+        <LabFrame
+            className="relative md:min-h-[600px]"
+            icon={Terminal}
+            title="Hooks Effect Lab"
+        >
 
             <div className="flex flex-col md:flex-row gap-6 h-full">
                 {/* Controls & Code Panel */}
@@ -176,6 +181,6 @@ export const HooksLab = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </LabFrame>
     );
 };

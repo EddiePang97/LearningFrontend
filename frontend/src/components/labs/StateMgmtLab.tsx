@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Database, ArrowDown, Zap, Layout, Layers, Share2 } from 'lucide-react';
+import { LabFrame } from './LabFrame';
 
 type StateMode = 'drilling' | 'global' | 'context';
 
@@ -58,7 +59,11 @@ export const StateMgmtLab = () => {
     };
 
     return (
-        <div className="flex flex-col min-h-[480px] md:min-h-[600px] w-full bg-[#0f0f11] rounded-3xl border border-white/10 p-4 md:p-6 font-mono text-sm shadow-2xl overflow-hidden relative">
+        <LabFrame
+            className="relative min-h-[480px] md:min-h-[600px] w-full"
+            icon={Database}
+            title="State Management Lab"
+        >
 
             {/* Header / Control */}
             <div className="flex flex-col md:flex-row justify-between items-center gap-4 mb-8 bg-gray-900/50 p-4 rounded-2xl border border-white/5 z-20 w-full">
@@ -198,6 +203,6 @@ export const StateMgmtLab = () => {
                     <p><strong className="text-purple-400">Global State:</strong> The Button connects DIRECTLY to the Store (external to the component tree). This is similar to Context but often comes with more features like DevTools, middleware, and performance optimizations (Select).</p>
                 )}
             </div>
-        </div>
+        </LabFrame>
     );
 };

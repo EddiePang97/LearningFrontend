@@ -1,12 +1,17 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Bell, Users, Zap, Settings2, ShoppingCart, Percent, CreditCard, Plus, Trash2 } from 'lucide-react';
+import { LabFrame } from './LabFrame';
 
 export const DesignPatternsLab = () => {
     const [activeTab, setActiveTab] = useState<'observer' | 'strategy'>('observer');
 
     return (
-        <div className="flex flex-col min-h-[480px] md:min-h-[600px] w-full bg-[#0f0f11] rounded-3xl border border-white/10 p-4 md:p-6 font-mono text-sm shadow-2xl overflow-hidden relative">
+        <LabFrame
+            className="relative min-h-[480px] md:min-h-[600px] w-full"
+            icon={Settings2}
+            title="Design Patterns Lab"
+        >
             <div className="mb-8 flex justify-between items-center">
                 <div>
                     <h3 className="text-xl font-bold text-white flex items-center gap-3">
@@ -58,7 +63,7 @@ export const DesignPatternsLab = () => {
                     )}
                 </AnimatePresence>
             </div>
-        </div>
+        </LabFrame>
     );
 };
 
