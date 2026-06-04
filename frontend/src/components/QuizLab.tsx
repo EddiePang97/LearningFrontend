@@ -1,10 +1,11 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, Trophy } from 'lucide-react';
-import type { LearningStage } from '../constants/learningPath';
+import type { LearningStage, LearningTrack } from '../constants/learningPath';
 
 interface QuizLabProps {
     activeStage: LearningStage;
+    activeTrack: LearningTrack;
     currentQuizIndex: number;
     score: number;
     quizFinished: boolean;
@@ -18,6 +19,7 @@ interface QuizLabProps {
 
 export const QuizLab: React.FC<QuizLabProps> = ({
     activeStage,
+    activeTrack,
     currentQuizIndex,
     score,
     quizFinished,
@@ -30,6 +32,18 @@ export const QuizLab: React.FC<QuizLabProps> = ({
 }) => {
     const currentQuestion = activeStage.quizzes[currentQuizIndex];
     const progress = ((currentQuizIndex + 1) / activeStage.quizzes.length) * 100;
+    const isBackend = activeTrack.id === 'backend';
+    const exitLabel = isBackend ? 'Exit Service Check' : 'Abort Mission';
+    const chamberLabel = isBackend ? 'Checkpoint' : 'Chamber';
+    const successHeadline = isBackend ? 'SERVICE CHECK CLEARED' : 'LEGACY SECURED';
+    const successBody = isBackend
+        ? 'Your backend reasoning is holding up well. This level is ready to hand you deeper service design work.'
+        : 'Your technical capacity exceeds expectations. Access to deeper levels is now authorized.';
+    const retryBody = isBackend
+        ? 'The system review surfaced weak spots in the backend model. Revisit the lessons, then run the service check again.'
+        : 'Diagnostic complete. Core concepts identified, but optimization is recommended before further advancement.';
+    const reviewLabel = isBackend ? 'Review Lessons' : 'Review Modules';
+    const nextLevelLabel = isBackend ? 'Next Backend Level' : 'Next Level';
 
     return (
         <motion.div
@@ -55,10 +69,10 @@ export const QuizLab: React.FC<QuizLabProps> = ({
                             <div className="p-2 rounded-xl bg-white/5 group-hover:bg-accent-purple/20 transition-colors">
                                 <ArrowLeft size={16} />
                             </div>
-                            Abort Mission
+                            {exitLabel}
                         </button>
                         <span className="px-4 py-1.5 bg-white/5 border border-white/5 rounded-full text-[10px] font-black text-gray-400 tracking-[0.2em] uppercase">
-                            Chamber {currentQuizIndex + 1} / {activeStage.quizzes.length}
+                            {chamberLabel} {currentQuizIndex + 1} / {activeStage.quizzes.length}
                         </span>
                     </div>
 
@@ -137,15 +151,15 @@ export const QuizLab: React.FC<QuizLabProps> = ({
                         <Trophy size={64} className="text-accent-purple relative z-10" />
                     </motion.div>
 
-                    <h2 className="text-4xl md:text-7xl font-black mb-6 font-display text-white tracking-tighter italic">LEGACY SECURED</h2>
+                    <h2 className="text-4xl md:text-7xl font-black mb-6 font-display text-white tracking-tighter italic">{successHeadline}</h2>
                     <div className="text-7xl md:text-[9rem] font-black text-accent-purple mb-10 font-display drop-shadow-[0_0_40px_rgba(168,85,247,0.6)] leading-none">
                         {score}<span className="text-3xl md:text-4xl text-gray-700 font-black italic">/{activeStage.quizzes.length}</span>
                     </div>
 
                     <p className="text-gray-400 mb-14 text-lg md:text-xl max-w-lg mx-auto leading-relaxed font-semibold">
                         {score >= activeStage.quizzes.length * 0.8
-                            ? "Your technical capacity exceeds expectations. Access to deeper levels is now authorized."
-                            : "Diagnostic complete. Core concepts identified, but optimization is recommended before further advancement."}
+                            ? successBody
+                            : retryBody}
                     </p>
 
                     <div className="flex flex-col sm:flex-row gap-5 justify-center">
@@ -153,14 +167,14 @@ export const QuizLab: React.FC<QuizLabProps> = ({
                             onClick={onExitQuiz}
                             className="px-10 py-5 rounded-[24px] border border-white/10 hover:bg-white/5 transition-all text-xs font-black text-white uppercase tracking-[0.3em]"
                         >
-                            Review Modules
+                            {reviewLabel}
                         </button>
                         {hasNextStage && score >= activeStage.quizzes.length / 2 && (
                             <button
                                 onClick={handleNextStage}
                                 className="px-12 py-5 bg-accent-purple hover:bg-purple-500 rounded-[24px] font-black transition-all text-xs text-white shadow-2xl shadow-purple-900/60 uppercase tracking-[0.3em] group"
                             >
-                                Next Level
+                                {nextLevelLabel}
                                 <motion.span
                                     animate={{ x: [0, 5, 0] }}
                                     transition={{ repeat: Infinity, duration: 1.5 }}

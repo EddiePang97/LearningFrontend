@@ -949,6 +949,7 @@ const backendLv8: LearningStage = {
         {
             id: 'backend-lv8-l2',
             title: '2. 输入安全：别让用户输入变成系统武器',
+            labId: 'cors-lab',
             content: `
 # 输入安全
 
@@ -967,6 +968,7 @@ const backendLv8: LearningStage = {
         {
             id: 'backend-lv8-l3',
             title: '3. 限流、密钥与最小权限',
+            labId: 'csrf-lab',
             content: `
 # 限流、密钥与最小权限
 
@@ -984,6 +986,7 @@ const backendLv8: LearningStage = {
         {
             id: 'backend-lv8-l4',
             title: '4. 威胁建模：先想最坏情况，再决定先防什么',
+            labId: 'csp-lab',
             content: `
 # 威胁建模
 

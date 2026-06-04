@@ -119,6 +119,7 @@ function App() {
   const quizRoute = isQuizRouteValid ? (
     <QuizWorkspace
       activeStage={activeStage}
+      activeTrack={activeTrack}
       currentQuizIndex={currentQuizIndex}
       handleAnswer={optionIndex => handleAnswer(activeStage, optionIndex)}
       handleNextStage={handleNextStage}
