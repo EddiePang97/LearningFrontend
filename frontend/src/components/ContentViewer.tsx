@@ -81,6 +81,7 @@ const LAB_COMPONENTS: Record<LabId, React.LazyExoticComponent<React.ComponentTyp
     'realtime-protocol-lab': lazyNamed(() => import('./labs/RealtimeProtocolLab'), 'RealtimeProtocolLab'),
     'network-debug-lab': lazyNamed(() => import('./labs/NetworkDebugLab'), 'NetworkDebugLab'),
     'network-security-lab': lazyNamed(() => import('./labs/NetworkSecurityLab'), 'NetworkSecurityLab'),
+    'form-validation-lab': lazyNamed(() => import('./labs/FormValidationLab'), 'FormValidationLab'),
     'big-o-lab': lazyNamed(() => import('./labs/BigOLab'), 'BigOLab'),
     'sorting-lab': lazyNamed(() => import('./labs/SortingLab'), 'SortingLab'),
     'tree-lab': lazyNamed(() => import('./labs/TreeLab'), 'TreeLab'),
