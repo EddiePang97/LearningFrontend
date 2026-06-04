@@ -960,7 +960,7 @@ const backendLv8: LearningStage = {
         {
             id: 'backend-lv8-l2',
             title: '2. 输入安全：别让用户输入变成系统武器',
-            labId: 'cors-lab',
+            labId: 'input-security-lab',
             content: `
 # 输入安全
 
