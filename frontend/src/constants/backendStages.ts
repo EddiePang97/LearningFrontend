@@ -198,6 +198,7 @@ DELETE /courses/:id
         {
             id: 'backend-lv1-l3',
             title: '3. 输入验证：不要把脏数据放进系统',
+            labId: 'validation-schema-lab',
             content: `
 # 输入验证
 
