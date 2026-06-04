@@ -76,6 +76,8 @@ export const ModuleList: React.FC<ModuleListProps> = ({
     const moduleLabel = activeTrack.id === 'backend' ? 'Service Map' : 'Modules';
     const unitLabel = activeTrack.id === 'backend' ? 'LESSONS' : 'UNITS';
     const examLabel = activeTrack.id === 'backend' ? 'Service Check' : 'Level Exam';
+    const lessonStepLabel = activeTrack.id === 'backend' ? 'LESSON' : 'UNIT';
+    const labBadgeLabel = activeTrack.id === 'backend' ? 'Service Lab' : 'Lab';
 
     return (
         <div
@@ -137,9 +139,20 @@ export const ModuleList: React.FC<ModuleListProps> = ({
                                     aria-current={isActive ? 'step' : undefined}
                                     className="min-w-0 grow p-3 text-left"
                                 >
-                                    <span className={`block text-[10px] font-black tracking-widest mb-0.5 transition-opacity ${isActive ? 'text-accent-purple' : 'opacity-40'}`}>
-                                        UNIT {idx + 1}
-                                    </span>
+                                    <div className="mb-0.5 flex items-center gap-2">
+                                        <span className={`block text-[10px] font-black tracking-widest transition-opacity ${isActive ? 'text-accent-purple' : 'opacity-40'}`}>
+                                            {lessonStepLabel} {idx + 1}
+                                        </span>
+                                        {lesson.labId ? (
+                                            <span className={`rounded-full border px-2 py-0.5 text-[8px] font-black uppercase tracking-[0.18em] ${
+                                                isActive
+                                                    ? 'border-accent-purple/30 bg-accent-purple/10 text-accent-purple'
+                                                    : 'border-white/10 bg-white/5 text-gray-500'
+                                            }`}>
+                                                {labBadgeLabel}
+                                            </span>
+                                        ) : null}
+                                    </div>
                                     <span className={`${isActive ? 'font-bold' : 'font-semibold'} block truncate text-[13px] tracking-tight`}>
                                         {lesson.title.split('. ')[1] || lesson.title}
                                     </span>
