@@ -1064,6 +1064,7 @@ const backendLv9: LearningStage = {
         {
             id: 'backend-lv9-l2',
             title: '2. 扩展策略：纵向扩展、横向扩展与拆分边界',
+            labId: 'system-design-lab',
             content: `
 # 扩展策略
 
