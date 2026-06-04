@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import type { Lesson, LearningStage, LearningTrack } from '../constants/learningPath';
-import { CheckCircle2, ChevronRight, GraduationCap } from 'lucide-react';
+import { BookOpen, CheckCircle2, ChevronRight, ExternalLink, GraduationCap, Layers3 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 
 interface ContentViewerProps {
@@ -103,6 +103,9 @@ export const ContentViewer: React.FC<ContentViewerProps> = ({
     const unitLabel = activeTrack.id === 'backend' ? 'Lesson' : 'Unit';
     const missionLabel = activeTrack.id === 'backend' ? 'Service Mission' : 'Level Mission';
     const checklistLabel = activeTrack.id === 'backend' ? 'Readiness Checklist' : 'Completion Checklist';
+    const topicsLabel = activeTrack.id === 'backend' ? 'Service Topics' : 'Core Topics';
+    const conceptsLabel = activeTrack.id === 'backend' ? 'Key Backend Concepts' : 'Key Concepts';
+    const resourcesLabel = activeTrack.id === 'backend' ? 'Field Notes' : 'Resources';
     const nextLabel = isLastLesson ? (hasNextStage ? 'Next Level' : 'Level Complete') : activeTrack.id === 'backend' ? 'Next Lesson' : 'Next Unit';
 
     return (
@@ -166,6 +169,73 @@ export const ContentViewer: React.FC<ContentViewerProps> = ({
                                             ))}
                                         </ul>
                                     </div>
+                                </section>
+
+                                <section className="mb-10 grid gap-3 xl:grid-cols-[1.05fr_0.95fr]">
+                                    <div className="rounded-4xl border border-white/10 bg-white/3 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
+                                        <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.24em] text-accent-purple">
+                                            <Layers3 size={14} />
+                                            <span>{topicsLabel}</span>
+                                        </div>
+                                        <div className="mt-4 flex flex-wrap gap-2">
+                                            {activeStage.topics.map(topic => (
+                                                <span
+                                                    key={topic}
+                                                    className="rounded-full border border-accent-purple/20 bg-accent-purple/8 px-3 py-1.5 text-[11px] font-bold tracking-[0.08em] text-gray-200"
+                                                >
+                                                    {topic}
+                                                </span>
+                                            ))}
+                                        </div>
+
+                                        <div className="mt-5 border-t border-white/8 pt-5">
+                                            <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.24em] text-gray-400">
+                                                <BookOpen size={14} />
+                                                <span>{conceptsLabel}</span>
+                                            </div>
+                                            <ul className="mt-3 grid gap-2 sm:grid-cols-2">
+                                                {activeStage.keyConcepts.map(concept => (
+                                                    <li
+                                                        key={concept}
+                                                        className="rounded-2xl border border-white/7 bg-black/20 px-3 py-2 text-xs font-semibold text-gray-300"
+                                                    >
+                                                        {concept}
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    {activeStage.resources.length > 0 && (
+                                        <div className="rounded-4xl border border-white/10 bg-black/20 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)]">
+                                            <p className="text-[10px] font-black uppercase tracking-[0.24em] text-accent-purple">
+                                                {resourcesLabel}
+                                            </p>
+                                            <p className="mt-3 text-xs font-semibold leading-6 text-gray-400">
+                                                Keep one or two trusted references nearby while working through this lesson path.
+                                            </p>
+                                            <div className="mt-4 space-y-3">
+                                                {activeStage.resources.map(resource => (
+                                                    <a
+                                                        key={resource.url}
+                                                        href={resource.url}
+                                                        target="_blank"
+                                                        rel="noreferrer"
+                                                        className="group flex items-center justify-between rounded-3xl border border-white/8 bg-white/3 px-4 py-3 transition-all duration-300 hover:border-accent-purple/30 hover:bg-accent-purple/8"
+                                                    >
+                                                        <div>
+                                                            <p className="text-xs font-bold text-white">{resource.name}</p>
+                                                            <p className="mt-1 text-[11px] font-medium text-gray-500">{resource.url}</p>
+                                                        </div>
+                                                        <ExternalLink
+                                                            size={15}
+                                                            className="shrink-0 text-gray-500 transition-colors duration-300 group-hover:text-accent-purple"
+                                                        />
+                                                    </a>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
                                 </section>
 
                                 <ReactMarkdown>{activeLesson.content}</ReactMarkdown>
