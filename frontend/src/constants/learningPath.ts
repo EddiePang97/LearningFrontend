@@ -11,7 +11,7 @@ export interface Lesson {
     id: string;
     title: string;
     content: string;
-    labId?: 'box-model' | 'layout-spatial' | 'flex-box' | 'grid-layout' | 'specificity' | 'event-loop' | 'closure-scope' | 'prototype-chain' | 'this-binding' | 'bundler-flow' | 'webpack-pipeline' | 'typescript-check' | 'typescript-advanced' | 'lint-format-lab' | 'ci-cd-lab' | 'virtual-dom' | 'react-hooks' | 'react-perf-lab' | 'state-mgmt' | 'component-patterns' | 'fiber-architecture' | 'web-vitals-lab' | 'resource-hints-lab' | 'media-optimization-lab' | 'code-splitting-lab' | 'crp-process' | 'web-workers' | 'http-cache' | 'xss-lab' | 'cors-lab' | 'jwt-lab' | 'csrf-lab' | 'csp-lab' | 'node-event-loop' | 'stream-lab' | 'middleware-lab' | 'big-o-lab' | 'sorting-lab' | 'tree-lab' | 'recursion-lab' | 'array-ll-lab' | 'stack-queue-lab' | 'hash-table-lab' | 'search-lab' | 'dp-lab' | 'design-patterns-lab' | 'mfe-lab' | 'solid-lab' | 'concurrency-lab' | 'deep-clone-lab' | 'reactivity-lab' | 'monitoring-lab' | 'virtual-list-lab' | 'queue-retry-lab' | 'system-design-lab' | 'transaction-lab' | 'index-query-lab' | 'rbac-lab' | 'cache-aside-lab' | 'signed-url-lab' | 'rate-limit-lab' | 'api-contract-lab' | 'dns-lab' | 'tls-handshake-lab' | 'cdn-cache-lab' | 'reverse-proxy-lab';
+    labId?: 'box-model' | 'layout-spatial' | 'flex-box' | 'grid-layout' | 'specificity' | 'event-loop' | 'closure-scope' | 'prototype-chain' | 'this-binding' | 'bundler-flow' | 'webpack-pipeline' | 'typescript-check' | 'typescript-advanced' | 'lint-format-lab' | 'ci-cd-lab' | 'virtual-dom' | 'react-hooks' | 'react-perf-lab' | 'state-mgmt' | 'component-patterns' | 'fiber-architecture' | 'web-vitals-lab' | 'resource-hints-lab' | 'media-optimization-lab' | 'code-splitting-lab' | 'crp-process' | 'web-workers' | 'http-cache' | 'xss-lab' | 'cors-lab' | 'jwt-lab' | 'csrf-lab' | 'csp-lab' | 'node-event-loop' | 'stream-lab' | 'middleware-lab' | 'big-o-lab' | 'sorting-lab' | 'tree-lab' | 'recursion-lab' | 'array-ll-lab' | 'stack-queue-lab' | 'hash-table-lab' | 'search-lab' | 'dp-lab' | 'design-patterns-lab' | 'mfe-lab' | 'solid-lab' | 'concurrency-lab' | 'deep-clone-lab' | 'reactivity-lab' | 'monitoring-lab' | 'virtual-list-lab' | 'queue-retry-lab' | 'system-design-lab' | 'transaction-lab' | 'index-query-lab' | 'rbac-lab' | 'cache-aside-lab' | 'signed-url-lab' | 'rate-limit-lab' | 'api-contract-lab' | 'dns-lab' | 'tls-handshake-lab' | 'cdn-cache-lab' | 'reverse-proxy-lab' | 'realtime-protocol-lab';
 }
 
 export interface LearningStage {
@@ -1897,6 +1897,7 @@ WebSocket 的优势在于连接建立后，客户端和服务端都可以主动�
             {
                 id: 'network-lv7-l4',
                 title: '4. 选择实时协议要先看业务形态和运维代价',
+                labId: 'realtime-protocol-lab',
                 content: `
 # 选型视角
 

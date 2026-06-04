@@ -78,6 +78,7 @@ const LAB_COMPONENTS: Record<LabId, React.LazyExoticComponent<React.ComponentTyp
     'tls-handshake-lab': lazyNamed(() => import('./labs/TlsHandshakeLab'), 'TlsHandshakeLab'),
     'cdn-cache-lab': lazyNamed(() => import('./labs/CdnCacheLab'), 'CdnCacheLab'),
     'reverse-proxy-lab': lazyNamed(() => import('./labs/ReverseProxyLab'), 'ReverseProxyLab'),
+    'realtime-protocol-lab': lazyNamed(() => import('./labs/RealtimeProtocolLab'), 'RealtimeProtocolLab'),
     'big-o-lab': lazyNamed(() => import('./labs/BigOLab'), 'BigOLab'),
     'sorting-lab': lazyNamed(() => import('./labs/SortingLab'), 'SortingLab'),
     'tree-lab': lazyNamed(() => import('./labs/TreeLab'), 'TreeLab'),
