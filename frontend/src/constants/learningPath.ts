@@ -11,7 +11,7 @@ export interface Lesson {
     id: string;
     title: string;
     content: string;
-    labId?: 'box-model' | 'layout-spatial' | 'flex-box' | 'grid-layout' | 'specificity' | 'event-loop' | 'closure-scope' | 'prototype-chain' | 'this-binding' | 'bundler-flow' | 'webpack-pipeline' | 'typescript-check' | 'typescript-advanced' | 'lint-format-lab' | 'ci-cd-lab' | 'virtual-dom' | 'react-hooks' | 'react-perf-lab' | 'state-mgmt' | 'component-patterns' | 'fiber-architecture' | 'web-vitals-lab' | 'resource-hints-lab' | 'media-optimization-lab' | 'code-splitting-lab' | 'crp-process' | 'web-workers' | 'http-cache' | 'xss-lab' | 'cors-lab' | 'jwt-lab' | 'csrf-lab' | 'csp-lab' | 'node-event-loop' | 'stream-lab' | 'middleware-lab' | 'big-o-lab' | 'sorting-lab' | 'tree-lab' | 'recursion-lab' | 'array-ll-lab' | 'stack-queue-lab' | 'hash-table-lab' | 'search-lab' | 'dp-lab' | 'design-patterns-lab' | 'mfe-lab' | 'solid-lab' | 'concurrency-lab' | 'deep-clone-lab' | 'reactivity-lab' | 'monitoring-lab' | 'virtual-list-lab' | 'queue-retry-lab' | 'system-design-lab' | 'transaction-lab' | 'index-query-lab' | 'rbac-lab' | 'cache-aside-lab' | 'signed-url-lab' | 'rate-limit-lab' | 'api-contract-lab';
+    labId?: 'box-model' | 'layout-spatial' | 'flex-box' | 'grid-layout' | 'specificity' | 'event-loop' | 'closure-scope' | 'prototype-chain' | 'this-binding' | 'bundler-flow' | 'webpack-pipeline' | 'typescript-check' | 'typescript-advanced' | 'lint-format-lab' | 'ci-cd-lab' | 'virtual-dom' | 'react-hooks' | 'react-perf-lab' | 'state-mgmt' | 'component-patterns' | 'fiber-architecture' | 'web-vitals-lab' | 'resource-hints-lab' | 'media-optimization-lab' | 'code-splitting-lab' | 'crp-process' | 'web-workers' | 'http-cache' | 'xss-lab' | 'cors-lab' | 'jwt-lab' | 'csrf-lab' | 'csp-lab' | 'node-event-loop' | 'stream-lab' | 'middleware-lab' | 'big-o-lab' | 'sorting-lab' | 'tree-lab' | 'recursion-lab' | 'array-ll-lab' | 'stack-queue-lab' | 'hash-table-lab' | 'search-lab' | 'dp-lab' | 'design-patterns-lab' | 'mfe-lab' | 'solid-lab' | 'concurrency-lab' | 'deep-clone-lab' | 'reactivity-lab' | 'monitoring-lab' | 'virtual-list-lab' | 'queue-retry-lab' | 'system-design-lab' | 'transaction-lab' | 'index-query-lab' | 'rbac-lab' | 'cache-aside-lab' | 'signed-url-lab' | 'rate-limit-lab' | 'api-contract-lab' | 'dns-lab';
 }
 
 export interface LearningStage {
@@ -1273,6 +1273,7 @@ DNS 的核心作用，就是把：
             {
                 id: 'network-lv1-l3',
                 title: '3. 为什么 DNS 问题常常带着缓存和延迟',
+                labId: 'dns-lab',
                 content: `
 # TTL 与传播
 
