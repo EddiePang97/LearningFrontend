@@ -940,6 +940,7 @@ const backendLv8: LearningStage = {
         {
             id: 'backend-lv8-l1',
             title: '1. 后端真正暴露给世界的攻击面有哪些',
+            labId: 'attack-surface-lab',
             content: `
 # 攻击面
 

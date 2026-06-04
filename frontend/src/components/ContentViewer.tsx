@@ -87,6 +87,7 @@ const LAB_COMPONENTS: Record<LabId, React.LazyExoticComponent<React.ComponentTyp
     'network-debug-lab': lazyNamed(() => import('./labs/NetworkDebugLab'), 'NetworkDebugLab'),
     'network-security-lab': lazyNamed(() => import('./labs/NetworkSecurityLab'), 'NetworkSecurityLab'),
     'threat-model-lab': lazyNamed(() => import('./labs/ThreatModelLab'), 'ThreatModelLab'),
+    'attack-surface-lab': lazyNamed(() => import('./labs/AttackSurfaceLab'), 'AttackSurfaceLab'),
     'form-validation-lab': lazyNamed(() => import('./labs/FormValidationLab'), 'FormValidationLab'),
     'auth-route-lab': lazyNamed(() => import('./labs/AuthRouteLab'), 'AuthRouteLab'),
     'payment-state-lab': lazyNamed(() => import('./labs/PaymentStateLab'), 'PaymentStateLab'),
