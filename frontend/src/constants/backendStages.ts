@@ -1090,6 +1090,7 @@ const backendLv9: LearningStage = {
         {
             id: 'backend-lv9-l3',
             title: '3. 数据、缓存、队列如何一起配合',
+            labId: 'data-flow-lab',
             content: `
 # 数据层协同设计
 

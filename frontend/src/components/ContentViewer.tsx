@@ -70,6 +70,7 @@ const LAB_COMPONENTS: Record<LabId, React.LazyExoticComponent<React.ComponentTyp
     'alert-noise-lab': lazyNamed(() => import('./labs/AlertNoiseLab'), 'AlertNoiseLab'),
     'queue-retry-lab': lazyNamed(() => import('./labs/QueueRetryLab'), 'QueueRetryLab'),
     'system-design-lab': lazyNamed(() => import('./labs/SystemDesignLab'), 'SystemDesignLab'),
+    'data-flow-lab': lazyNamed(() => import('./labs/DataFlowLab'), 'DataFlowLab'),
     'degradation-lab': lazyNamed(() => import('./labs/DegradationLab'), 'DegradationLab'),
     'transaction-lab': lazyNamed(() => import('./labs/TransactionLab'), 'TransactionLab'),
     'index-query-lab': lazyNamed(() => import('./labs/IndexQueryLab'), 'IndexQueryLab'),
