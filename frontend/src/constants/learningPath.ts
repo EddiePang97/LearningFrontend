@@ -39,6 +39,7 @@ export interface LearningTrack {
 }
 
 import { ALL_STAGES } from './stages';
+import { BACKEND_STAGES } from './backendStages';
 
 export const LEARNING_PATH: LearningStage[] = ALL_STAGES;
 
@@ -95,19 +96,6 @@ ${outcome}
         }
     ]
 });
-
-const BACKEND_STAGES: LearningStage[] = [
-    createPlaceholderStage('backend', 0, 'Node.js 与服务端基础', '理解服务端运行模型、请求处理和模块组织。', ['Node.js', 'Runtime', 'Server'], '搭建一个能处理基础请求的 Node.js 服务。', '能解释服务端应用如何接收请求、执行逻辑并返回响应。'),
-    createPlaceholderStage('backend', 1, 'REST API 设计与验证', '学习资源建模、状态码、错误格式和输入校验。', ['REST', 'Validation', 'HTTP Status'], '设计一组结构清晰、错误可预期的 API。', '能独立设计 CRUD API 并处理参数验证和错误响应。'),
-    createPlaceholderStage('backend', 2, '认证、授权与会话', '掌握登录、权限、Session、Cookie、Token 的核心机制。', ['Auth', 'Session', 'JWT', 'RBAC'], '实现一个有角色权限的认证系统。', '能区分认证与授权，并设计基础权限模型。'),
-    createPlaceholderStage('backend', 3, 'SQL 与 PostgreSQL', '学习表结构、索引、事务、约束和查询优化基础。', ['SQL', 'PostgreSQL', 'Index', 'Transaction'], '为真实业务建模并写出可靠查询。', '能设计关系型 schema 并解释索引与事务的取舍。'),
-    createPlaceholderStage('backend', 4, '缓存与 Redis', '理解缓存策略、失效、穿透、雪崩和一致性。', ['Redis', 'Cache', 'TTL'], '为高频读取接口加入缓存层。', '能判断哪些数据适合缓存以及如何处理失效。'),
-    createPlaceholderStage('backend', 5, '队列与后台任务', '学习异步任务、重试、幂等和调度。', ['Queue', 'Job', 'Retry', 'Idempotency'], '实现一个可靠的后台任务流程。', '能设计不阻塞主请求的任务处理链路。'),
-    createPlaceholderStage('backend', 6, '文件、对象存储与流', '处理上传、下载、断点、权限和流式传输。', ['Upload', 'Object Storage', 'Stream'], '构建安全的文件上传与访问流程。', '能解释文件为什么不应该直接塞进普通业务请求里。'),
-    createPlaceholderStage('backend', 7, '可观测性', '学习日志、指标、链路追踪和告警。', ['Log', 'Metric', 'Trace', 'Alert'], '为服务加入可定位问题的观测信号。', '能通过日志、指标和 trace 分析线上问题。'),
-    createPlaceholderStage('backend', 8, '后端安全', '学习限流、密钥、OWASP、输入安全和威胁建模。', ['Rate Limit', 'Secrets', 'OWASP'], '加固一个公开 API 服务。', '能识别常见后端攻击面并设计防护。'),
-    createPlaceholderStage('backend', 9, '后端系统设计', '综合设计扩展性、可靠性和成本。', ['System Design', 'Scalability', 'Reliability'], '设计一个能扩展的后端服务架构。', '能从流量、数据、故障和部署角度解释系统设计。')
-];
 
 const FULLSTACK_STAGES: LearningStage[] = [
     createPlaceholderStage('fullstack', 0, '需求拆解与产品边界', '把想法拆成用户流程、数据和交互边界。', ['Requirement', 'Scope', 'User Flow'], '从产品需求推导技术任务。', '能把一个模糊需求拆成可开发的前后端任务。'),

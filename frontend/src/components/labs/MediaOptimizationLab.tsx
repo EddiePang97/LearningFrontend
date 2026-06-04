@@ -1,6 +1,9 @@
 import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle2, Eye, Image as ImageIcon, Layers3, ScrollText, Sparkles, Video } from 'lucide-react';
+import { LabMetricCard } from './LabMetricCard';
+import { LabMiniCard } from './LabMiniCard';
+import { LabStoryCard } from './LabStoryCard';
 
 type MediaMode = 'format' | 'responsive' | 'lazy';
 
@@ -118,10 +121,10 @@ export const MediaOptimizationLab = () => {
                     </div>
 
                     <div className="grid shrink-0 gap-3 sm:grid-cols-2 xl:grid-cols-4 2xl:w-[380px]">
-                        <MetricCard label="Transfer Cost" value={active.metrics.bytes} tone={mode} />
-                        <MetricCard label="First Screen" value={active.metrics.firstScreen} tone="neutral" />
-                        <MetricCard label="Perceived Speed" value={active.metrics.perceived} tone={mode} />
-                        <MetricCard label="Best For" value={active.metrics.bestFor} tone="neutral" />
+                        <LabMetricCard label="Transfer Cost" value={active.metrics.bytes} tone={mode} />
+                        <LabMetricCard label="First Screen" value={active.metrics.firstScreen} tone="neutral" />
+                        <LabMetricCard label="Perceived Speed" value={active.metrics.perceived} tone={mode} />
+                        <LabMetricCard label="Best For" value={active.metrics.bestFor} tone="neutral" />
                     </div>
                 </div>
             </div>
@@ -149,14 +152,14 @@ export const MediaOptimizationLab = () => {
                         </div>
                     </div>
 
-                    <StoryCard
+                    <LabStoryCard
                         icon={mode === 'format' ? ImageIcon : mode === 'responsive' ? Layers3 : ScrollText}
                         title="Recommended Move"
                         tone={mode}
                         body={active.recommendation}
                     />
 
-                    <StoryCard
+                    <LabStoryCard
                         icon={mode === 'lazy' ? Video : Eye}
                         title="Watch Out"
                         tone="neutral"
@@ -202,7 +205,7 @@ export const MediaOptimizationLab = () => {
                             <div className="text-[10px] font-black uppercase tracking-[0.22em] text-gray-500">Code Shape</div>
                             <pre className="mt-4 overflow-x-auto whitespace-pre-wrap break-words rounded-2xl border border-white/10 bg-white/5 p-4 text-xs leading-6 text-white/90">{codeExample}</pre>
                             <div className="mt-4 grid gap-3">
-                                <MiniCard
+                                <LabMiniCard
                                     title="Waste It Removes"
                                     tone={mode}
                                     body={mode === 'format'
@@ -211,7 +214,7 @@ export const MediaOptimizationLab = () => {
                                             ? '小屏不再下载桌面资源，按设备拿刚刚好的版本。'
                                             : '首屏外媒体不再和关键资源一起抢第一波带宽。'}
                                 />
-                                <MiniCard
+                                <LabMiniCard
                                     title="If You Skip It"
                                     tone="neutral"
                                     body={mode === 'format'
@@ -228,86 +231,6 @@ export const MediaOptimizationLab = () => {
         </div>
     );
 };
-
-function MetricCard({
-    label,
-    value,
-    tone,
-}: {
-    label: string;
-    value: string;
-    tone: MediaMode | 'neutral';
-}) {
-    const toneClass = tone === 'format'
-        ? modeTone.format
-        : tone === 'responsive'
-            ? modeTone.responsive
-            : tone === 'lazy'
-                ? modeTone.lazy
-                : 'border-white/10 bg-white/5 text-gray-200';
-
-    return (
-        <div className={`min-w-0 rounded-2xl border p-4 ${toneClass}`}>
-            <div className="text-[10px] font-black uppercase tracking-[0.22em] text-current/80 break-words">{label}</div>
-            <div className="mt-3 break-words text-sm font-bold text-white">{value}</div>
-        </div>
-    );
-}
-
-function StoryCard({
-    icon: Icon,
-    title,
-    tone,
-    body,
-}: {
-    icon: typeof ImageIcon;
-    title: string;
-    tone: MediaMode | 'neutral';
-    body: string;
-}) {
-    const toneClass = tone === 'format'
-        ? modeTone.format
-        : tone === 'responsive'
-            ? modeTone.responsive
-            : tone === 'lazy'
-                ? modeTone.lazy
-                : 'border-white/10 bg-white/5 text-gray-200';
-
-    return (
-        <div className="rounded-3xl border border-white/10 bg-black/30 p-4">
-            <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[10px] font-black uppercase tracking-[0.22em] ${toneClass}`}>
-                <Icon size={12} />
-                {title}
-            </div>
-            <p className="mt-4 text-sm leading-7 text-white">{body}</p>
-        </div>
-    );
-}
-
-function MiniCard({
-    title,
-    tone,
-    body,
-}: {
-    title: string;
-    tone: MediaMode | 'neutral';
-    body: string;
-}) {
-    const toneClass = tone === 'format'
-        ? modeTone.format
-        : tone === 'responsive'
-            ? modeTone.responsive
-            : tone === 'lazy'
-                ? modeTone.lazy
-                : 'border-white/10 bg-white/5 text-gray-200';
-
-    return (
-        <div className={`rounded-2xl border p-4 ${toneClass}`}>
-            <div className="text-[10px] font-black uppercase tracking-[0.22em] text-current/80">{title}</div>
-            <p className="mt-3 text-xs leading-6 text-white/85">{body}</p>
-        </div>
-    );
-}
 
 function frameClass(mode: MediaMode, index: number) {
     if (mode === 'format') {

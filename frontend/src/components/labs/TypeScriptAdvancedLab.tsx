@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { AlertTriangle, Boxes, CheckCircle2, Layers3, Sparkles } from 'lucide-react';
+import { LabMetricCard } from './LabMetricCard';
+import { LabStoryCard } from './LabStoryCard';
 
 type Mode = 'generics' | 'union';
 type GenericType = 'number' | 'string';
@@ -84,10 +86,10 @@ export const TypeScriptAdvancedLab = () => {
                 </div>
 
                 <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
-                    <MetricCard label="Current Mode" value={mode === 'generics' ? 'Preserve Type' : 'Restrict Options'} tone={mode === 'generics' ? 'violet' : 'cyan'} />
-                    <MetricCard label="Type Safety" value={current.valid ? 'Healthy' : 'Blocked'} tone={current.valid ? 'emerald' : 'amber'} />
-                    <MetricCard label="TS Focus" value={mode === 'generics' ? 'What flows through T' : 'What values are allowed'} tone="slate" />
-                    <MetricCard label="Mental Cue" value={mode === 'generics' ? 'Shape' : 'Range'} tone="slate" />
+                    <LabMetricCard label="Current Mode" value={mode === 'generics' ? 'Preserve Type' : 'Restrict Options'} tone={mode === 'generics' ? 'violet' : 'cyan'} />
+                    <LabMetricCard label="Type Safety" value={current.valid ? 'Healthy' : 'Blocked'} tone={current.valid ? 'emerald' : 'amber'} />
+                    <LabMetricCard label="TS Focus" value={mode === 'generics' ? 'What flows through T' : 'What values are allowed'} tone="slate" />
+                    <LabMetricCard label="Mental Cue" value={mode === 'generics' ? 'Shape' : 'Range'} tone="slate" />
                 </div>
             </div>
 
@@ -145,7 +147,7 @@ export const TypeScriptAdvancedLab = () => {
                         )}
                     </div>
 
-                    <StoryCard
+                    <LabStoryCard
                         icon={mode === 'generics' ? Boxes : Layers3}
                         title={mode === 'generics' ? 'Generics 心智模型' : 'Union 心智模型'}
                         tone={mode === 'generics' ? 'violet' : 'cyan'}
@@ -221,65 +223,6 @@ export const TypeScriptAdvancedLab = () => {
         </div>
     );
 };
-
-function MetricCard({
-    label,
-    value,
-    tone,
-}: {
-    label: string;
-    value: string;
-    tone: 'violet' | 'cyan' | 'emerald' | 'amber' | 'slate';
-}) {
-    const toneClass = tone === 'violet'
-        ? 'border-violet-500/30 bg-violet-500/10 text-violet-200'
-        : tone === 'cyan'
-            ? 'border-cyan-500/30 bg-cyan-500/10 text-cyan-200'
-            : tone === 'emerald'
-                ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-200'
-                : tone === 'amber'
-                    ? 'border-amber-500/30 bg-amber-500/10 text-amber-200'
-                    : 'border-white/10 bg-white/5 text-gray-200';
-
-    return (
-        <div className={`rounded-2xl border p-4 ${toneClass}`}>
-            <div className="text-[10px] font-black uppercase tracking-[0.22em] text-current/80">{label}</div>
-            <div className="mt-3 text-sm font-bold text-white">{value}</div>
-        </div>
-    );
-}
-
-function StoryCard({
-    icon: Icon,
-    title,
-    tone,
-    items,
-}: {
-    icon: typeof Boxes;
-    title: string;
-    tone: 'violet' | 'cyan';
-    items: string[];
-}) {
-    const toneClass = tone === 'violet'
-        ? 'border-violet-500/30 bg-violet-500/10 text-violet-200'
-        : 'border-cyan-500/30 bg-cyan-500/10 text-cyan-200';
-
-    return (
-        <div className="rounded-3xl border border-white/10 bg-black/30 p-4">
-            <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[10px] font-black uppercase tracking-widest ${toneClass}`}>
-                <Icon size={12} />
-                {title}
-            </div>
-            <div className="mt-3 space-y-3">
-                {items.map(item => (
-                    <div key={item} className="rounded-2xl border border-white/10 bg-[#0b0b0c] px-4 py-3 text-sm leading-7 text-gray-300">
-                        {item}
-                    </div>
-                ))}
-            </div>
-        </div>
-    );
-}
 
 function CodeCard({
     title,

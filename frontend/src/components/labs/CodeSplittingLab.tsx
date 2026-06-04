@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, CheckCircle2, Layers3, Package2, Route, Sparkles } from 'lucide-react';
+import { LabMiniCard } from './LabMiniCard';
 
 type SplitMode = 'single-bundle' | 'route-split' | 'component-split';
 type Tone = 'violet' | 'sky' | 'emerald' | 'slate';
@@ -165,9 +166,10 @@ export const CodeSplittingLab = () => {
     const active = useMemo(() => SCENARIOS.find((item) => item.id === mode) ?? SCENARIOS[1], [mode]);
     const phase = active.phases[phaseIndex] ?? active.phases[0];
 
-    useEffect(() => {
+    const handleModeChange = (nextMode: SplitMode) => {
+        setMode(nextMode);
         setPhaseIndex(0);
-    }, [mode]);
+    };
 
     useEffect(() => {
         if (!autoPlay) return;
@@ -225,7 +227,7 @@ export const CodeSplittingLab = () => {
                                 <button
                                     key={item.id}
                                     type="button"
-                                    onClick={() => setMode(item.id)}
+                                    onClick={() => handleModeChange(item.id)}
                                     className={`rounded-2xl border px-4 py-3 text-left transition-all ${
                                         item.id === mode ? toneClass[item.tone] : 'border-white/10 bg-white/5 text-gray-300 hover:bg-white/10'
                                     }`}
@@ -366,7 +368,7 @@ export const CodeSplittingLab = () => {
                             <pre className="mt-4 overflow-x-auto whitespace-pre-wrap break-words rounded-2xl border border-white/10 bg-white/5 p-4 text-xs leading-6 text-white/90">{active.code}</pre>
 
                             <div className="mt-4 grid gap-3">
-                                <MiniCard
+                                <LabMiniCard
                                     title="What Improves"
                                     tone={active.tone}
                                     body={active.id === 'single-bundle'
@@ -375,7 +377,7 @@ export const CodeSplittingLab = () => {
                                             ? '当前页更快到达，用户真的跳页时再补下一块。'
                                             : '同一路由里的重组件也不再污染普通浏览路径。'}
                                 />
-                                <MiniCard
+                                <LabMiniCard
                                     title="What To Watch"
                                     tone="slate"
                                     body={active.id === 'single-bundle'
@@ -428,23 +430,6 @@ function StoryPanel({
                 {title}
             </div>
             <p className="mt-4 text-sm leading-7 text-white">{body}</p>
-        </div>
-    );
-}
-
-function MiniCard({
-    title,
-    tone,
-    body,
-}: {
-    title: string;
-    tone: Tone;
-    body: string;
-}) {
-    return (
-        <div className={`rounded-2xl border p-4 ${toneClass[tone]}`}>
-            <div className="text-[10px] font-black uppercase tracking-[0.22em] text-current/80">{title}</div>
-            <p className="mt-3 text-xs leading-6 text-white/85">{body}</p>
         </div>
     );
 }

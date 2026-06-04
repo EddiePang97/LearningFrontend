@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { CheckCircle2, Clock3, ExternalLink, Globe, Rocket, Sparkles } from 'lucide-react';
+import { LabMetricCard } from './LabMetricCard';
+import { LabStoryCard } from './LabStoryCard';
 
 type HintMode = 'preload' | 'prefetch' | 'preconnect';
 type TimelineTone = 'slate' | 'sky' | 'violet' | 'emerald';
@@ -73,7 +75,7 @@ export const ResourceHintsLab = () => {
         if (mode === 'preload') {
             return [
                 { label: 'HTML parsed', detail: '页面发现一张首屏 Hero 图和关键字体马上要用。', tone: 'slate' },
-                { label: '<link rel=\"preload\">', detail: '浏览器立刻把 Hero 图提到前面下载。', tone: 'violet' },
+                { label: '<link rel="preload">', detail: '浏览器立刻把 Hero 图提到前面下载。', tone: 'violet' },
                 { label: 'Render', detail: '关键资源已经在路上，首屏内容更早完整出现。', tone: 'emerald' },
             ];
         }
@@ -81,14 +83,14 @@ export const ResourceHintsLab = () => {
         if (mode === 'prefetch') {
             return [
                 { label: 'Current page stable', detail: '当前页主要资源已经差不多加载完。', tone: 'slate' },
-                { label: '<link rel=\"prefetch\">', detail: '浏览器趁空闲低优先级拉取下一个路由 chunk。', tone: 'sky' },
+                { label: '<link rel="prefetch">', detail: '浏览器趁空闲低优先级拉取下一个路由 chunk。', tone: 'sky' },
                 { label: 'Next navigation', detail: '用户点进详情页时，缓存里已经有一部分资源。', tone: 'emerald' },
             ];
         }
 
         return [
             { label: 'Intent known', detail: '页面很快要访问 fonts.example.com。', tone: 'slate' },
-            { label: '<link rel=\"preconnect\">', detail: '先完成 DNS、TCP、TLS 握手，但还没下资源。', tone: 'emerald' },
+            { label: '<link rel="preconnect">', detail: '先完成 DNS、TCP、TLS 握手，但还没下资源。', tone: 'emerald' },
             { label: 'Real request', detail: '真正请求字体时，连接已经热好了。', tone: 'violet' },
         ];
     }, [mode]);
@@ -123,10 +125,10 @@ export const ResourceHintsLab = () => {
                     </div>
 
                     <div className="grid shrink-0 gap-3 sm:grid-cols-2 xl:grid-cols-4 2xl:w-[360px]">
-                        <MetricCard label="Current Choice" value={active.label} tone={mode} />
-                        <MetricCard label="Best For" value={active.intent} tone="neutral" />
-                        <MetricCard label="Downloads Bytes?" value={mode === 'preconnect' ? 'No' : 'Yes'} tone={mode === 'preconnect' ? 'neutral' : mode} />
-                        <MetricCard label="Priority" value={mode === 'prefetch' ? 'Low / Idle' : mode === 'preconnect' ? 'Connection Only' : 'High'} tone={mode === 'prefetch' ? 'prefetch' : mode === 'preconnect' ? 'preconnect' : 'preload'} />
+                        <LabMetricCard label="Current Choice" value={active.label} tone={mode} />
+                        <LabMetricCard label="Best For" value={active.intent} tone="neutral" />
+                        <LabMetricCard label="Downloads Bytes?" value={mode === 'preconnect' ? 'No' : 'Yes'} tone={mode === 'preconnect' ? 'neutral' : mode} />
+                        <LabMetricCard label="Priority" value={mode === 'prefetch' ? 'Low / Idle' : mode === 'preconnect' ? 'Connection Only' : 'High'} tone={mode === 'prefetch' ? 'prefetch' : mode === 'preconnect' ? 'preconnect' : 'preload'} />
                     </div>
                 </div>
             </div>
@@ -154,14 +156,14 @@ export const ResourceHintsLab = () => {
                         </div>
                     </div>
 
-                    <StoryCard
+                    <LabStoryCard
                         icon={Rocket}
                         title="Use It When"
                         tone={mode}
                         body={active.description}
                     />
 
-                    <StoryCard
+                    <LabStoryCard
                         icon={Clock3}
                         title="Main Warning"
                         tone="neutral"
@@ -242,61 +244,6 @@ export const ResourceHintsLab = () => {
         </div>
     );
 };
-
-function MetricCard({
-    label,
-    value,
-    tone,
-}: {
-    label: string;
-    value: string;
-    tone: HintMode | 'neutral';
-}) {
-    const toneClass = tone === 'preload'
-        ? modeTone.preload
-        : tone === 'prefetch'
-            ? modeTone.prefetch
-            : tone === 'preconnect'
-                ? modeTone.preconnect
-                : 'border-white/10 bg-white/5 text-gray-200';
-
-    return (
-        <div className={`min-w-0 rounded-2xl border p-4 ${toneClass}`}>
-            <div className="text-[10px] font-black uppercase tracking-[0.22em] text-current/80 break-words">{label}</div>
-            <div className="mt-3 break-words text-sm font-bold text-white">{value}</div>
-        </div>
-    );
-}
-
-function StoryCard({
-    icon: Icon,
-    title,
-    tone,
-    body,
-}: {
-    icon: typeof Rocket;
-    title: string;
-    tone: HintMode | 'neutral';
-    body: string;
-}) {
-    const toneClass = tone === 'preload'
-        ? modeTone.preload
-        : tone === 'prefetch'
-            ? modeTone.prefetch
-            : tone === 'preconnect'
-                ? modeTone.preconnect
-                : 'border-white/10 bg-white/5 text-gray-200';
-
-    return (
-        <div className="rounded-3xl border border-white/10 bg-black/30 p-4">
-            <div className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[10px] font-black uppercase tracking-[0.22em] ${toneClass}`}>
-                <Icon size={12} />
-                {title}
-            </div>
-            <p className="mt-4 text-sm leading-7 text-white">{body}</p>
-        </div>
-    );
-}
 
 function frameToneClass(tone: TimelineTone) {
     if (tone === 'sky') return 'border-sky-500/35 bg-sky-500/12 text-sky-200';
