@@ -11,7 +11,7 @@ export interface Lesson {
     id: string;
     title: string;
     content: string;
-    labId?: 'box-model' | 'layout-spatial' | 'flex-box' | 'grid-layout' | 'specificity' | 'event-loop' | 'closure-scope' | 'prototype-chain' | 'this-binding' | 'bundler-flow' | 'webpack-pipeline' | 'typescript-check' | 'typescript-advanced' | 'lint-format-lab' | 'ci-cd-lab' | 'virtual-dom' | 'react-hooks' | 'react-perf-lab' | 'state-mgmt' | 'component-patterns' | 'fiber-architecture' | 'web-vitals-lab' | 'resource-hints-lab' | 'media-optimization-lab' | 'code-splitting-lab' | 'crp-process' | 'web-workers' | 'http-cache' | 'xss-lab' | 'cors-lab' | 'jwt-lab' | 'csrf-lab' | 'csp-lab' | 'node-event-loop' | 'stream-lab' | 'middleware-lab' | 'big-o-lab' | 'sorting-lab' | 'tree-lab' | 'recursion-lab' | 'array-ll-lab' | 'stack-queue-lab' | 'hash-table-lab' | 'search-lab' | 'dp-lab' | 'design-patterns-lab' | 'mfe-lab' | 'solid-lab' | 'concurrency-lab' | 'deep-clone-lab' | 'reactivity-lab' | 'monitoring-lab' | 'virtual-list-lab' | 'queue-retry-lab' | 'system-design-lab' | 'transaction-lab' | 'index-query-lab' | 'rbac-lab' | 'cache-aside-lab' | 'signed-url-lab' | 'rate-limit-lab' | 'api-contract-lab' | 'dns-lab' | 'tls-handshake-lab';
+    labId?: 'box-model' | 'layout-spatial' | 'flex-box' | 'grid-layout' | 'specificity' | 'event-loop' | 'closure-scope' | 'prototype-chain' | 'this-binding' | 'bundler-flow' | 'webpack-pipeline' | 'typescript-check' | 'typescript-advanced' | 'lint-format-lab' | 'ci-cd-lab' | 'virtual-dom' | 'react-hooks' | 'react-perf-lab' | 'state-mgmt' | 'component-patterns' | 'fiber-architecture' | 'web-vitals-lab' | 'resource-hints-lab' | 'media-optimization-lab' | 'code-splitting-lab' | 'crp-process' | 'web-workers' | 'http-cache' | 'xss-lab' | 'cors-lab' | 'jwt-lab' | 'csrf-lab' | 'csp-lab' | 'node-event-loop' | 'stream-lab' | 'middleware-lab' | 'big-o-lab' | 'sorting-lab' | 'tree-lab' | 'recursion-lab' | 'array-ll-lab' | 'stack-queue-lab' | 'hash-table-lab' | 'search-lab' | 'dp-lab' | 'design-patterns-lab' | 'mfe-lab' | 'solid-lab' | 'concurrency-lab' | 'deep-clone-lab' | 'reactivity-lab' | 'monitoring-lab' | 'virtual-list-lab' | 'queue-retry-lab' | 'system-design-lab' | 'transaction-lab' | 'index-query-lab' | 'rbac-lab' | 'cache-aside-lab' | 'signed-url-lab' | 'rate-limit-lab' | 'api-contract-lab' | 'dns-lab' | 'tls-handshake-lab' | 'cdn-cache-lab';
 }
 
 export interface LearningStage {
@@ -1659,6 +1659,7 @@ HTTP/3 继续在连接层做优化，目标通常还是：
             {
                 id: 'network-lv5-l2',
                 title: '2. Cache-Control 是在告诉各层缓存应该怎么做',
+                labId: 'cdn-cache-lab',
                 content: `
 # Cache-Control 语义
 

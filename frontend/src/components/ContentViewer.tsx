@@ -76,6 +76,7 @@ const LAB_COMPONENTS: Record<LabId, React.LazyExoticComponent<React.ComponentTyp
     'api-contract-lab': lazyNamed(() => import('./labs/ApiContractLab'), 'ApiContractLab'),
     'dns-lab': lazyNamed(() => import('./labs/DnsLab'), 'DnsLab'),
     'tls-handshake-lab': lazyNamed(() => import('./labs/TlsHandshakeLab'), 'TlsHandshakeLab'),
+    'cdn-cache-lab': lazyNamed(() => import('./labs/CdnCacheLab'), 'CdnCacheLab'),
     'big-o-lab': lazyNamed(() => import('./labs/BigOLab'), 'BigOLab'),
     'sorting-lab': lazyNamed(() => import('./labs/SortingLab'), 'SortingLab'),
     'tree-lab': lazyNamed(() => import('./labs/TreeLab'), 'TreeLab'),
