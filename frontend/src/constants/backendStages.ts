@@ -723,6 +723,7 @@ const backendLv6: LearningStage = {
         {
             id: 'backend-lv6-l1',
             title: '1. 文件上传不只是一个表单提交',
+            labId: 'upload-pipeline-lab',
             content: `
 # 文件上传链路
 
