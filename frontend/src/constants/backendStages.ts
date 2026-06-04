@@ -176,6 +176,7 @@ DELETE /courses/:id
         {
             id: 'backend-lv1-l2',
             title: '2. 状态码不是装饰，它是接口契约的一部分',
+            labId: 'status-code-lab',
             content: `
 # 状态码的职责
 
