@@ -429,6 +429,7 @@ const backendLv3: LearningStage = {
         {
             id: 'backend-lv3-l3',
             title: '3. 索引与查询性能：为什么查得慢',
+            labId: 'index-query-lab',
             content: `
 # 索引与查询性能
 
