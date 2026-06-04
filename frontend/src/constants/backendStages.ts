@@ -640,7 +640,7 @@ const backendLv5: LearningStage = {
         {
             id: 'backend-lv5-l3',
             title: '3. 重试机制：失败后再来一次，但不能乱来',
-            labId: 'concurrency-lab',
+            labId: 'queue-retry-lab',
             content: `
 # 重试机制
 
