@@ -739,6 +739,7 @@ const backendLv6: LearningStage = {
         {
             id: 'backend-lv6-l2',
             title: '2. 对象存储：为什么文件常常不直接放业务服务里',
+            labId: 'object-storage-lab',
             content: `
 # 对象存储的职责
 
