@@ -768,6 +768,7 @@ const backendLv6: LearningStage = {
         {
             id: 'backend-lv6-l4',
             title: '4. 上传权限、签名链接与安全访问',
+            labId: 'signed-url-lab',
             content: `
 # 文件访问控制
 
