@@ -151,6 +151,7 @@ const backendLv1: LearningStage = {
         {
             id: 'backend-lv1-l1',
             title: '1. 资源导向设计：先设计对象，再设计接口',
+            labId: 'resource-model-lab',
             content: `
 # 资源导向设计
 
