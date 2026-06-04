@@ -847,6 +847,7 @@ const backendLv7: LearningStage = {
         {
             id: 'backend-lv7-l2',
             title: '2. 指标：看趋势，而不是只看单次错误',
+            labId: 'metric-trend-lab',
             content: `
 # 指标
 
