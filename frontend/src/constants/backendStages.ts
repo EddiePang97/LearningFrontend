@@ -424,6 +424,7 @@ const backendLv3: LearningStage = {
         {
             id: 'backend-lv3-l2',
             title: '2. 主键、外键、唯一约束到底在保护什么',
+            labId: 'constraint-guard-lab',
             content: `
 # 约束不是束缚，而是保护
 
