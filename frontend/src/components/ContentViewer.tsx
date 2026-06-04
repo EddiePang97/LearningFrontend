@@ -65,6 +65,7 @@ const LAB_COMPONENTS: Record<LabId, React.LazyExoticComponent<React.ComponentTyp
     'node-event-loop': lazyNamed(() => import('./labs/NodeEventLoopLab'), 'NodeEventLoopLab'),
     'stream-lab': lazyNamed(() => import('./labs/StreamLab'), 'StreamLab'),
     'middleware-lab': lazyNamed(() => import('./labs/MiddlewareLab'), 'MiddlewareLab'),
+    'trace-lab': lazyNamed(() => import('./labs/TraceLab'), 'TraceLab'),
     'queue-retry-lab': lazyNamed(() => import('./labs/QueueRetryLab'), 'QueueRetryLab'),
     'system-design-lab': lazyNamed(() => import('./labs/SystemDesignLab'), 'SystemDesignLab'),
     'transaction-lab': lazyNamed(() => import('./labs/TransactionLab'), 'TransactionLab'),

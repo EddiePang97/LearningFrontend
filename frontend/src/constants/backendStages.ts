@@ -865,6 +865,7 @@ const backendLv7: LearningStage = {
         {
             id: 'backend-lv7-l3',
             title: '3. Trace：一条请求到底卡在哪一段',
+            labId: 'trace-lab',
             content: `
 # Trace
 
