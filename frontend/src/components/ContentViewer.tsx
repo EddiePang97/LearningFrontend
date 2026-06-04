@@ -67,6 +67,7 @@ const LAB_COMPONENTS: Record<LabId, React.LazyExoticComponent<React.ComponentTyp
     'resource-model-lab': lazyNamed(() => import('./labs/ResourceModelLab'), 'ResourceModelLab'),
     'status-code-lab': lazyNamed(() => import('./labs/StatusCodeLab'), 'StatusCodeLab'),
     'validation-schema-lab': lazyNamed(() => import('./labs/ValidationSchemaLab'), 'ValidationSchemaLab'),
+    'session-cookie-lab': lazyNamed(() => import('./labs/SessionCookieLab'), 'SessionCookieLab'),
     'stream-lab': lazyNamed(() => import('./labs/StreamLab'), 'StreamLab'),
     'middleware-lab': lazyNamed(() => import('./labs/MiddlewareLab'), 'MiddlewareLab'),
     'metric-trend-lab': lazyNamed(() => import('./labs/MetricTrendLab'), 'MetricTrendLab'),

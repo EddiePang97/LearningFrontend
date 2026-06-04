@@ -302,6 +302,7 @@ const backendLv2: LearningStage = {
         {
             id: 'backend-lv2-l2',
             title: '2. Cookie、Session 与服务端会话',
+            labId: 'session-cookie-lab',
             content: `
 # Cookie 与 Session
 
