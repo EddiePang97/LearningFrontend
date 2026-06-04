@@ -540,6 +540,7 @@ const backendLv4: LearningStage = {
         {
             id: 'backend-lv4-l3',
             title: '3. TTL、一致性与失效策略',
+            labId: 'cache-consistency-lab',
             content: `
 # TTL 与一致性
 
