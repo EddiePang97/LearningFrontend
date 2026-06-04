@@ -98,9 +98,337 @@ ${outcome}
 });
 
 const FULLSTACK_STAGES: LearningStage[] = [
-    createPlaceholderStage('fullstack', 0, '需求拆解与产品边界', '把想法拆成用户流程、数据和交互边界。', ['Requirement', 'Scope', 'User Flow'], '从产品需求推导技术任务。', '能把一个模糊需求拆成可开发的前后端任务。'),
-    createPlaceholderStage('fullstack', 1, '端到端功能架构', '连接 UI、API、数据库和状态流。', ['E2E Flow', 'API', 'Schema'], '设计一个完整功能闭环。', '能画出从用户点击到数据落库的完整链路。'),
-    createPlaceholderStage('fullstack', 2, '数据建模到界面呈现', '从 schema 到接口再到 UI 列表和详情。', ['Schema', 'Query', 'UI State'], '实现一个数据驱动页面。', '能让数据模型、接口和界面状态互相对齐。'),
+    {
+        id: 'fullstack-lv0',
+        level: 0,
+        title: 'Level 0: 需求拆解与产品边界',
+        description: '先把“要做什么”说清楚，再决定“怎么做”。学会把模糊需求拆成用户流程、数据对象、前后端边界和可交付范围。',
+        topics: ['Requirement', 'Scope', 'User Flow', 'Data Shape', 'Delivery Slice'],
+        keyConcepts: ['用户目标', '范围切分', '前后端契约', '最小可交付路径'],
+        mission: '把一个模糊产品想法拆成第一版可开发的全栈任务清单，明确 UI、API、数据与验收边界。',
+        outcome: '能把需求从“一个点子”转成可交付的第一阶段全栈范围，并解释哪些功能应该后做。',
+        checklist: [
+            '能区分用户目标、业务规则和技术实现细节',
+            '能画出最小用户流程并标出前端、后端、数据库责任',
+            '能把大功能切成一版可交付的小范围',
+        ],
+        resources: [
+            { name: 'Product Requirement Writing Guide', url: 'https://www.atlassian.com/agile/project-management/requirements' },
+            { name: 'User Story Mapping Overview', url: 'https://www.jpattonassociates.com/user-story-mapping/' },
+        ],
+        lessons: [
+            {
+                id: 'fullstack-lv0-l1',
+                title: '1. 从用户目标开始，不要从技术组件开始',
+                content: `
+# 从用户目标开始
+
+全栈项目最容易犯的错，是一上来就讨论：
+
+- 用什么框架
+- 接几个接口
+- 数据库建几张表
+
+更成熟的顺序应该是：
+
+1. 用户想完成什么任务
+2. 这个任务的最小成功路径是什么
+3. 哪些信息必须被保存
+4. 哪些能力必须由后端承担
+
+只有先把用户目标说清楚，后面的 UI、API 和 schema 才不会东拼西凑。
+`,
+            },
+            {
+                id: 'fullstack-lv0-l2',
+                title: '2. 把需求拆成用户流程与状态变化',
+                content: `
+# 用户流程与状态变化
+
+一个全栈功能通常不是一个页面，而是一条状态链路。
+
+例如“创建任务”这个需求，背后至少包括：
+
+- 用户输入内容
+- 前端做基础校验
+- 后端接收并验证
+- 数据写入数据库
+- 页面刷新列表状态
+
+如果你只盯着页面，很容易漏掉真正重要的状态变化点。
+`,
+            },
+            {
+                id: 'fullstack-lv0-l3',
+                title: '3. 识别前端边界、后端边界与数据边界',
+                content: `
+# 三种边界
+
+需求拆解里最关键的不是“功能很多”，而是边界要清楚。
+
+- **前端边界**: 展示什么、收集什么、即时反馈什么
+- **后端边界**: 校验什么、保存什么、保护什么
+- **数据边界**: 哪些信息必须持久化，哪些只是临时 UI 状态
+
+边界模糊时，常见结果就是前后端互相补锅，最后谁都说不清责任。
+`,
+            },
+            {
+                id: 'fullstack-lv0-l4',
+                title: '4. 第一版范围：做最小可交付闭环',
+                content: `
+# 最小可交付闭环
+
+真正可交付的全栈范围，不是“功能很多”，而是“能闭环”。
+
+一个第一版通常只需要：
+
+- 一个核心用户流程
+- 一组最小数据模型
+- 一套基础错误处理
+- 一个能演示成功路径的 UI
+
+先闭环，再扩展，是全栈项目最稳的推进方式。
+`,
+            },
+        ],
+        quizzes: [
+            {
+                id: 'fullstack-lv0-q1',
+                question: '全栈需求拆解时，最应该先明确的内容是什么？',
+                options: ['数据库用 MySQL 还是 PostgreSQL', '用户想完成什么目标与最小成功路径', '页面主色调是什么', '是否要先接入监控系统'],
+                correctAnswer: 1,
+                explanation: '用户目标和最小成功路径决定了后续 UI、API 和数据边界。',
+                difficulty: 'Easy',
+            },
+            {
+                id: 'fullstack-lv0-q2',
+                question: '为什么第一版范围强调“闭环”而不是“功能数量”？',
+                options: ['因为闭环更容易展示真实价值与责任边界', '因为功能越少性能一定越好', '因为这样就不需要后端', '因为这样测试一定可以省略'],
+                correctAnswer: 0,
+                explanation: '能闭环的范围才能真实验证用户流程、数据和错误处理是否成立。',
+                difficulty: 'Medium',
+            },
+        ],
+    },
+    {
+        id: 'fullstack-lv1',
+        level: 1,
+        title: 'Level 1: 端到端功能架构',
+        description: '连接 UI、API、数据库与状态流，让“点击按钮”到“数据落库再回到界面”成为一条完整链路。',
+        topics: ['E2E Flow', 'API', 'State Flow', 'Persistence', 'Failure Path'],
+        keyConcepts: ['请求链路', '状态同步', '服务边界', '成功与失败路径'],
+        mission: '设计一个完整功能闭环，说明一次操作如何穿过前端、后端和数据库再返回用户。',
+        outcome: '能画出一条端到端功能链路，并解释每一层为什么存在、在哪一层做什么。',
+        checklist: [
+            '能描述从用户点击到响应渲染的完整请求路径',
+            '能识别前端状态、接口契约和数据库写入之间的耦合点',
+            '能说明成功路径和失败路径应该如何分流',
+        ],
+        resources: [
+            { name: 'Web Application Architecture', url: 'https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Server-side/First_steps/Website_security' },
+            { name: 'API Design Best Practices', url: 'https://learn.microsoft.com/en-us/azure/architecture/best-practices/api-design' },
+        ],
+        lessons: [
+            {
+                id: 'fullstack-lv1-l1',
+                title: '1. 一次点击背后的链路',
+                content: `
+# 一次点击背后的链路
+
+当用户点击“创建课程”时，系统真正要处理的是一条完整链路：
+
+1. 前端收集输入
+2. 本地做初步校验
+3. 发起 API 请求
+4. 后端验证并执行业务逻辑
+5. 数据库持久化
+6. 返回响应
+7. 前端更新列表或详情状态
+
+全栈架构的核心，就是把这条链路讲清楚。
+`,
+            },
+            {
+                id: 'fullstack-lv1-l2',
+                title: '2. 接口不是函数调用，而是跨边界契约',
+                content: `
+# 接口契约
+
+前端和后端之间最容易失真的是接口边界。
+
+一个成熟接口至少要明确：
+
+- 输入结构
+- 成功响应结构
+- 失败响应结构
+- 状态码语义
+
+接口不是“先写了再看”，而是前后端协作时最重要的公共契约。
+`,
+            },
+            {
+                id: 'fullstack-lv1-l3',
+                title: '3. 前端状态与后端真相不是一回事',
+                content: `
+# 状态与真相
+
+前端看到的状态，是用户当前会话里的“局部视图”；后端保存的状态，才是系统的共享真相。
+
+这意味着：
+
+- 前端可以先显示 loading、success、error
+- 但最终成功与否必须以后端结果为准
+- 乐观更新要搭配回滚策略
+
+很多全栈 bug，本质上就是把“界面状态”误当成“系统事实”。
+`,
+            },
+            {
+                id: 'fullstack-lv1-l4',
+                title: '4. 把失败路径设计出来',
+                content: `
+# 失败路径
+
+全栈功能设计不能只画 happy path。
+
+你还需要明确：
+
+- 输入不合法时谁报错
+- 资源不存在时接口怎么回
+- 写库失败时页面如何提示
+- 重试与刷新后状态如何恢复
+
+失败路径设计得越早，后面的代码越不容易乱。
+`,
+            },
+        ],
+        quizzes: [
+            {
+                id: 'fullstack-lv1-q1',
+                question: '端到端功能架构里，最重要的核心视角更接近哪一项？',
+                options: ['把所有页面先画出来', '把一次操作如何穿过前端、后端和数据库说清楚', '先决定部署平台', '只关注 SQL 语法'],
+                correctAnswer: 1,
+                explanation: '全栈架构的价值在于讲清楚完整链路，而不是只看单个层面。',
+                difficulty: 'Easy',
+            },
+            {
+                id: 'fullstack-lv1-q2',
+                question: '为什么前端状态不能直接当成系统真相？',
+                options: ['因为前端不能显示数据', '因为真正的共享业务状态仍以后端持久化结果为准', '因为前端不能发请求', '因为所有状态都应该存在 localStorage'],
+                correctAnswer: 1,
+                explanation: '前端状态是会话视图，系统真相仍由后端和持久化层维护。',
+                difficulty: 'Medium',
+            },
+        ],
+    },
+    {
+        id: 'fullstack-lv2',
+        level: 2,
+        title: 'Level 2: 数据建模到界面呈现',
+        description: '从 schema 到接口再到 UI 列表和详情，把“数据怎么存”和“界面怎么展示”真正对齐。',
+        topics: ['Schema', 'Query', 'List View', 'Detail View', 'UI State'],
+        keyConcepts: ['数据模型', '列表与详情投影', '接口裁剪', '状态对齐'],
+        mission: '围绕一个数据驱动页面，设计 schema、查询接口和前端状态，让列表、详情与更新动作彼此一致。',
+        outcome: '能让数据模型、接口结构和界面状态相互配合，而不是各写各的。',
+        checklist: [
+            '能区分数据库实体、接口响应对象和界面展示对象',
+            '能设计列表接口与详情接口的不同返回粒度',
+            '能解释新增、更新、删除后 UI 应该如何同步状态',
+        ],
+        resources: [
+            { name: 'Database Normalization Basics', url: 'https://www.postgresql.org/docs/current/ddl.html' },
+            { name: 'TanStack Query Overview', url: 'https://tanstack.com/query/latest/docs/framework/react/overview' },
+        ],
+        lessons: [
+            {
+                id: 'fullstack-lv2-l1',
+                title: '1. 数据库实体不等于页面组件',
+                content: `
+# 实体与界面不是一回事
+
+数据库里的实体是为了持久化和约束设计的，页面里的组件是为了展示和交互设计的。
+
+这意味着：
+
+- 数据库字段不一定全部暴露给前端
+- 页面展示字段有时来自多个实体拼装
+- 列表页和详情页也不一定需要同样的数据粒度
+
+全栈设计成熟的标志之一，就是知道什么该共用，什么不该直接照搬。
+`,
+            },
+            {
+                id: 'fullstack-lv2-l2',
+                title: '2. 列表接口与详情接口为什么通常不一样',
+                content: `
+# 列表与详情的粒度差异
+
+列表页关心的是：
+
+- 快速加载
+- 关键字段摘要
+- 排序、筛选、分页
+
+详情页关心的是：
+
+- 更完整的数据结构
+- 附加关系信息
+- 编辑与操作上下文
+
+如果两个接口完全一样，要么列表太重，要么详情信息不够。
+`,
+            },
+            {
+                id: 'fullstack-lv2-l3',
+                title: '3. 新增、更新、删除后的界面同步',
+                content: `
+# 界面同步
+
+一个数据驱动页面最大的体验问题，通常不是“接口没返回”，而是“返回了但 UI 没跟上”。
+
+常见同步动作包括：
+
+- 创建后插入列表
+- 更新后刷新详情或局部字段
+- 删除后移除项目并处理空状态
+
+如果不提前设计这些同步策略，界面会很快出现“看起来没问题，实际状态已错位”的情况。
+`,
+            },
+            {
+                id: 'fullstack-lv2-l4',
+                title: '4. 让 schema、接口和状态命名保持一致',
+                content: `
+# 对齐命名与结构
+
+全栈协作最隐蔽的成本，往往是命名和结构不一致。
+
+例如数据库叫 \`published_at\`，接口叫 \`publishTime\`，前端状态又叫 \`date\`，久而久之每一层都在翻译。
+
+适度统一命名、明确字段语义，可以显著降低维护成本和沟通噪音。
+`,
+            },
+        ],
+        quizzes: [
+            {
+                id: 'fullstack-lv2-q1',
+                question: '为什么列表接口和详情接口通常不应该完全一样？',
+                options: ['因为 REST 不允许复用字段', '因为列表强调轻量摘要，详情强调完整上下文', '因为前端不能处理大对象', '因为数据库只能返回一列'],
+                correctAnswer: 1,
+                explanation: '列表和详情承担的任务不同，返回粒度通常也应该不同。',
+                difficulty: 'Easy',
+            },
+            {
+                id: 'fullstack-lv2-q2',
+                question: '下面哪种情况最容易导致全栈状态错位？',
+                options: ['创建后及时更新列表状态', '删除后处理空状态', '接口返回成功但前端没有同步刷新对应数据', '列表接口只返回摘要字段'],
+                correctAnswer: 2,
+                explanation: '数据写成功但界面没同步，是最典型的数据驱动 UI 错位来源。',
+                difficulty: 'Medium',
+            },
+        ],
+    },
     createPlaceholderStage('fullstack', 3, '表单、校验与错误状态', '处理表单输入、服务端校验和用户反馈。', ['Form', 'Validation', 'Error State'], '构建一个可靠提交的复杂表单。', '能设计前后端一致的校验和错误展示。'),
     createPlaceholderStage('fullstack', 4, '登录态与权限界面', '把 auth 能力贯穿 UI、API 和路由。', ['Auth UI', 'Protected Route', 'RBAC'], '实现角色化的应用体验。', '能让不同角色看到正确的数据和操作。'),
     createPlaceholderStage('fullstack', 5, '支付与订阅流程', '学习订单、支付状态、Webhook 和订阅生命周期。', ['Payment', 'Webhook', 'Subscription'], '设计一个可追踪的支付流程。', '能解释支付为什么必须以后端状态为准。'),
