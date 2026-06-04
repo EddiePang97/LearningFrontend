@@ -80,6 +80,7 @@ const LAB_COMPONENTS: Record<LabId, React.LazyExoticComponent<React.ComponentTyp
     'reverse-proxy-lab': lazyNamed(() => import('./labs/ReverseProxyLab'), 'ReverseProxyLab'),
     'realtime-protocol-lab': lazyNamed(() => import('./labs/RealtimeProtocolLab'), 'RealtimeProtocolLab'),
     'network-debug-lab': lazyNamed(() => import('./labs/NetworkDebugLab'), 'NetworkDebugLab'),
+    'network-security-lab': lazyNamed(() => import('./labs/NetworkSecurityLab'), 'NetworkSecurityLab'),
     'big-o-lab': lazyNamed(() => import('./labs/BigOLab'), 'BigOLab'),
     'sorting-lab': lazyNamed(() => import('./labs/SortingLab'), 'SortingLab'),
     'tree-lab': lazyNamed(() => import('./labs/TreeLab'), 'TreeLab'),
