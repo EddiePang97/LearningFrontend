@@ -516,6 +516,7 @@ const backendLv4: LearningStage = {
         {
             id: 'backend-lv4-l2',
             title: '2. Cache Aside：最常见也最容易出问题的模式',
+            labId: 'http-cache',
             content: `
 # Cache Aside
 
@@ -639,6 +640,7 @@ const backendLv5: LearningStage = {
         {
             id: 'backend-lv5-l3',
             title: '3. 重试机制：失败后再来一次，但不能乱来',
+            labId: 'concurrency-lab',
             content: `
 # 重试机制
 
