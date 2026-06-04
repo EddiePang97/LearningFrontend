@@ -43,60 +43,6 @@ import { BACKEND_STAGES } from './backendStages';
 
 export const LEARNING_PATH: LearningStage[] = ALL_STAGES;
 
-const createPlaceholderStage = (
-    trackId: LearningTrack['id'],
-    level: number,
-    title: string,
-    description: string,
-    topics: string[],
-    mission: string,
-    outcome: string
-): LearningStage => ({
-    id: `${trackId}-lv${level}`,
-    level,
-    title: `Level ${level}: ${title}`,
-    description,
-    topics,
-    keyConcepts: topics,
-    mission,
-    outcome,
-    checklist: [
-        '完成本 level 的核心概念学习',
-        '能用自己的话解释关键机制',
-        '完成对应练习或项目任务'
-    ],
-    resources: [],
-    lessons: [
-        {
-            id: `${trackId}-lv${level}-l1`,
-            title: `1. ${title}`,
-            content: `# ${title}
-
-这个 level 属于 ${trackId} track，目前是课程骨架。后续可以在这里补充详细课件、互动 Lab、练习项目和面试题。
-
-## 学习目标
-
-${outcome}
-`
-        }
-    ],
-    quizzes: [
-        {
-            id: `${trackId}-lv${level}-q1`,
-            question: `完成 ${title} 后，你最应该能做到什么？`,
-            options: [
-                '只记住术语',
-                outcome,
-                '跳过实践直接进入下一章',
-                '只看代码不理解机制'
-            ],
-            correctAnswer: 1,
-            explanation: '这个阶段的目标是形成可解释、可实践、可迁移的能力。',
-            difficulty: 'Easy'
-        }
-    ]
-});
-
 const FULLSTACK_STAGES: LearningStage[] = [
     {
         id: 'fullstack-lv0',
@@ -1673,11 +1619,521 @@ HTTP/3 继续在连接层做优化，目标通常还是：
             },
         ],
     },
-    createPlaceholderStage('network', 5, 'CDN 与缓存头', '学习边缘缓存、Cache-Control 和失效。', ['CDN', 'Cache-Control', 'Edge'], '设计静态资源缓存策略。', '能解释浏览器缓存和 CDN 缓存的区别。'),
-    createPlaceholderStage('network', 6, '代理、反向代理与负载均衡', '理解请求转发、网关和流量分配。', ['Proxy', 'Reverse Proxy', 'Load Balancer'], '画出反向代理后的服务拓扑。', '能解释 Nginx、网关和负载均衡的角色。'),
-    createPlaceholderStage('network', 7, '实时协议', '学习 WebSocket、SSE 和长轮询。', ['WebSocket', 'SSE', 'Realtime'], '实现或设计一个实时消息通道。', '能选择适合业务场景的实时通信方案。'),
-    createPlaceholderStage('network', 8, '网络安全基础', '理解 CORS、CSRF、MITM、WAF 和常见攻击。', ['CORS', 'CSRF', 'MITM', 'WAF'], '分析一个 Web 网络安全链路。', '能把浏览器安全和网络安全联系起来。'),
-    createPlaceholderStage('network', 9, '网络调试工具', '学习 curl、dig、traceroute、Wireshark 和 DevTools。', ['curl', 'dig', 'traceroute', 'Wireshark'], '用工具定位真实网络问题。', '能用命令和 DevTools 给网络问题下结论。')
+    {
+        id: 'network-lv5',
+        level: 5,
+        title: 'Level 5: CDN 与缓存头',
+        description: '学习浏览器缓存、CDN 边缘缓存和 Cache-Control 如何一起工作，让静态资源更快、更稳地靠近用户。',
+        topics: ['CDN', 'Cache-Control', 'ETag', 'Edge Cache', 'Invalidation'],
+        keyConcepts: ['浏览器缓存', '边缘缓存', '缓存命中', '失效策略', '版本化资源'],
+        mission: '为一组真实静态资源设计浏览器与 CDN 缓存策略，并解释什么时候该强缓存、什么时候该失效。',
+        outcome: '能区分浏览器缓存和 CDN 缓存的职责，并能说明 Cache-Control、ETag 和资源版本化之间如何配合。',
+        checklist: [
+            '能解释浏览器缓存和 CDN 缓存为什么不是同一层',
+            '能说明 immutable 资源和频繁变更资源的缓存策略差异',
+            '能理解为什么缓存设计总是跟失效策略绑在一起',
+        ],
+        resources: [
+            { name: 'HTTP Caching', url: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Caching' },
+            { name: 'Cloudflare CDN Learning Center', url: 'https://www.cloudflare.com/learning/cdn/what-is-a-cdn/' },
+        ],
+        lessons: [
+            {
+                id: 'network-lv5-l1',
+                title: '1. 浏览器缓存和 CDN 缓存是在不同位置替你省成本',
+                content: `
+# 两层缓存
+
+缓存不是一个统一黑盒，而是至少有两层常见位置：
+
+- 浏览器本地缓存
+- CDN 边缘节点缓存
+
+前者更靠近单个用户，后者更靠近一大片地理区域里的用户。
+
+理解“缓存在哪”，才能理解为什么命中效果和失效成本完全不同。
+`,
+            },
+            {
+                id: 'network-lv5-l2',
+                title: '2. Cache-Control 是在告诉各层缓存应该怎么做',
+                content: `
+# Cache-Control 语义
+
+Cache-Control 不只是一个性能头，它是在表达缓存策略：
+
+- 能不能缓存
+- 能缓存多久
+- 是否允许共享缓存复用
+- 资源是否可以被长期视为不变
+
+这些语义会同时影响浏览器和中间缓存层的行为。
+`,
+            },
+            {
+                id: 'network-lv5-l3',
+                title: '3. 版本化资源让强缓存可控，而不是永远不敢缓存',
+                content: `
+# 版本化资源
+
+真正高效的前端资源缓存，通常依赖：
+
+- 文件名带 hash
+- 长时间强缓存
+- 新版本发布时 URL 改变
+
+这样你才能既享受高命中，又避免旧内容长期污染用户。
+`,
+            },
+            {
+                id: 'network-lv5-l4',
+                title: '4. 失效策略决定缓存是不是可维护',
+                content: `
+# 失效能力
+
+缓存最难的不是“命中”，而是“改了之后怎么安全生效”。
+
+所以缓存设计通常要同时考虑：
+
+- TTL
+- revalidation
+- purge / invalidation
+- 资源版本切换
+
+没有失效策略，缓存迟早会从性能工具变成事故源。
+`,
+            },
+        ],
+        quizzes: [
+            {
+                id: 'network-lv5-q1',
+                question: '为什么带 hash 的静态资源更适合长期强缓存？',
+                options: ['因为这样资源更小', '因为 URL 变了就能自然切换到新版本，旧缓存不必强行覆盖', '因为 hash 会自动加密资源', '因为 CDN 不支持无 hash 文件'],
+                correctAnswer: 1,
+                explanation: '版本化资源让“缓存很久”和“更新可控”可以同时成立。',
+                difficulty: 'Easy',
+            },
+            {
+                id: 'network-lv5-q2',
+                question: '浏览器缓存和 CDN 缓存的关键区别更接近哪项？',
+                options: ['一个在用户侧，一个在边缘网络侧', '一个只缓存图片，一个只缓存 JSON', '一个只支持 HTTP/1.1', '它们完全是同一层概念'],
+                correctAnswer: 0,
+                explanation: '两者位置不同，因此命中范围、失效方式和收益也不同。',
+                difficulty: 'Medium',
+            },
+        ],
+    },
+    {
+        id: 'network-lv6',
+        level: 6,
+        title: 'Level 6: 代理、反向代理与负载均衡',
+        description: '理解请求为什么经常不会直接打到应用服务，而是先经过代理、网关或负载均衡层完成转发和保护。',
+        topics: ['Proxy', 'Reverse Proxy', 'Gateway', 'Load Balancer', 'Traffic Distribution'],
+        keyConcepts: ['正向代理', '反向代理', '流量入口', '服务发现', '健康检查'],
+        mission: '画出一个典型反向代理后的服务拓扑，并解释请求为什么需要经过这一层。',
+        outcome: '能区分正向代理与反向代理的角色，并能解释 Nginx、网关和负载均衡在入口层分别承担什么职责。',
+        checklist: [
+            '能说明为什么应用服务前面常常还有一层入口代理',
+            '能解释负载均衡为什么不仅仅是“平均分请求”',
+            '能理解健康检查和故障摘除的作用',
+        ],
+        resources: [
+            { name: 'Reverse Proxy Explained', url: 'https://www.cloudflare.com/learning/cdn/glossary/reverse-proxy/' },
+            { name: 'Load Balancing Basics', url: 'https://www.nginx.com/resources/glossary/load-balancing/' },
+        ],
+        lessons: [
+            {
+                id: 'network-lv6-l1',
+                title: '1. 代理是在替请求找路或管路',
+                content: `
+# 代理层的意义
+
+请求不一定直接抵达业务进程，中间常常会先经过代理层。
+
+代理层的价值通常包括：
+
+- 转发请求
+- 统一入口
+- 隐藏内部拓扑
+- 提供限流、日志或安全能力
+
+所以它更像一层“交通枢纽”，而不是单纯转发器。
+`,
+            },
+            {
+                id: 'network-lv6-l2',
+                title: '2. 反向代理站在服务端前面，替服务接住世界',
+                content: `
+# 反向代理
+
+反向代理的核心特点是：客户端觉得自己在访问一个站点，但真实请求可能被分配到内部不同服务。
+
+这让你可以：
+
+- 隐藏后端结构
+- 统一 TLS 终止
+- 做静态资源托管
+- 做多服务路由
+`,
+            },
+            {
+                id: 'network-lv6-l3',
+                title: '3. 负载均衡是在分流，同时也在处理故障',
+                content: `
+# 不只是平均分
+
+负载均衡不是机械地“一个一个轮着发”。
+
+它通常还要考虑：
+
+- 后端是否健康
+- 哪台机器当前更忙
+- 某些请求是否要粘在同一实例
+
+这意味着它同时在做效率和稳定性管理。
+`,
+            },
+            {
+                id: 'network-lv6-l4',
+                title: '4. 网关与入口层让多服务系统更可控',
+                content: `
+# 入口治理
+
+服务越来越多时，统一入口层能把认证、路由、日志和策略集中处理。
+
+这能让下游服务更专注业务本身，也让整个系统更容易观察和治理。
+`,
+            },
+        ],
+        quizzes: [
+            {
+                id: 'network-lv6-q1',
+                question: '反向代理最典型的站位更接近哪里？',
+                options: ['站在客户端前面帮用户翻墙', '站在服务端前面统一接住外部请求', '直接替代数据库', '只存在于本地开发环境'],
+                correctAnswer: 1,
+                explanation: '反向代理是服务侧的入口层能力，客户端通常感知不到后端真实拓扑。',
+                difficulty: 'Easy',
+            },
+            {
+                id: 'network-lv6-q2',
+                question: '为什么负载均衡不能简单理解成“平均分请求”？',
+                options: ['因为它还需要结合健康状态与流量策略做分配', '因为它不处理网络请求', '因为它只用于前端样式分发', '因为它不能和代理一起用'],
+                correctAnswer: 0,
+                explanation: '真实负载均衡同时承担稳定性和效率上的入口治理职责。',
+                difficulty: 'Medium',
+            },
+        ],
+    },
+    {
+        id: 'network-lv7',
+        level: 7,
+        title: 'Level 7: 实时协议',
+        description: '学习为什么有些业务不适合“请求一次、返回一次”的 HTTP 模式，以及 WebSocket、SSE 和长轮询如何各自补位。',
+        topics: ['WebSocket', 'SSE', 'Long Polling', 'Realtime', 'Connection Lifecycle'],
+        keyConcepts: ['实时推送', '双向通信', '单向事件流', '连接保持', '协议选择'],
+        mission: '为聊天、通知或行情这类业务选择合适的实时通信方案，并解释取舍原因。',
+        outcome: '能区分 WebSocket、SSE 和长轮询的适用场景，并能解释“实时”到底需要什么网络特性。',
+        checklist: [
+            '能说明为什么普通短连接 HTTP 不总适合实时场景',
+            '能区分双向通信和单向服务端推送的差异',
+            '能根据业务复杂度与基础设施条件选择合适协议',
+        ],
+        resources: [
+            { name: 'MDN WebSocket API', url: 'https://developer.mozilla.org/en-US/docs/Web/API/WebSocket' },
+            { name: 'Server-Sent Events', url: 'https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events' },
+        ],
+        lessons: [
+            {
+                id: 'network-lv7-l1',
+                title: '1. 实时需求的核心不是“快”，而是持续同步',
+                content: `
+# 持续同步
+
+实时场景真正特殊的地方，不是只追求低延迟，而是：
+
+- 状态会持续变化
+- 变化要尽快同步给对端
+- 链路可能需要长期保持
+
+这让它和普通请求-响应模式有本质差别。
+`,
+            },
+            {
+                id: 'network-lv7-l2',
+                title: '2. WebSocket 更适合真正双向持续通信',
+                content: `
+# WebSocket
+
+WebSocket 的优势在于连接建立后，客户端和服务端都可以主动发消息。
+
+它非常适合：
+
+- 聊天
+- 协作编辑
+- 高频交互面板
+
+但代价是需要更仔细地管理连接生命周期和基础设施兼容性。
+`,
+            },
+            {
+                id: 'network-lv7-l3',
+                title: '3. SSE 适合服务端单向推送事件',
+                content: `
+# SSE
+
+如果你的场景主要是“服务端不断告诉客户端新事件”，而客户端不需要频繁反向发消息，SSE 常常更简单。
+
+例如：
+
+- 通知流
+- 状态更新流
+- 简单监控事件流
+`,
+            },
+            {
+                id: 'network-lv7-l4',
+                title: '4. 选择实时协议要先看业务形态和运维代价',
+                content: `
+# 选型视角
+
+协议选型时应该先问：
+
+- 需要双向还是单向
+- 消息频率高不高
+- 基础设施是否好支持长连接
+- 断线恢复要求多高
+
+选型不是比谁“更先进”，而是谁更匹配当前业务和运维能力。
+`,
+            },
+        ],
+        quizzes: [
+            {
+                id: 'network-lv7-q1',
+                question: '如果业务主要是服务端持续把新事件推给客户端，而客户端几乎不主动发消息，哪种方案通常更贴切？',
+                options: ['SSE', 'DELETE', 'DNS', 'ETag'],
+                correctAnswer: 0,
+                explanation: 'SSE 很适合单向事件流场景，复杂度通常低于全双工方案。',
+                difficulty: 'Easy',
+            },
+            {
+                id: 'network-lv7-q2',
+                question: '为什么实时协议选型不能只问“哪种最快”？',
+                options: ['因为实时协议不关心网络', '因为业务方向、消息频率和运维代价同样决定选型是否合适', '因为所有协议速度都完全一样', '因为浏览器不支持长连接'],
+                correctAnswer: 1,
+                explanation: '真实选型要兼顾业务模型、基础设施和维护成本，而不只是理论性能。',
+                difficulty: 'Medium',
+            },
+        ],
+    },
+    {
+        id: 'network-lv8',
+        level: 8,
+        title: 'Level 8: 网络安全基础',
+        description: '把 CORS、CSRF、MITM、WAF 和常见攻击放在同一条网络链路里看，理解哪些问题发生在浏览器边界，哪些发生在传输和入口层。',
+        topics: ['CORS', 'CSRF', 'MITM', 'WAF', 'Attack Surface'],
+        keyConcepts: ['同源边界', '请求伪造', '中间人攻击', '入口防护', '威胁分层'],
+        mission: '分析一条 Web 请求链路上的主要安全风险，并能判断应该在哪一层建立防线。',
+        outcome: '能把浏览器安全、传输安全和入口安全联系起来，而不是把所有问题都误归为“后端安全”或“前端安全”。',
+        checklist: [
+            '能区分 CORS 和 CSRF 分别在解决什么问题',
+            '能解释 HTTPS 为什么能降低 MITM 风险但不等于解决所有安全问题',
+            '能理解 WAF 和应用层权限控制不是同一类防线',
+        ],
+        resources: [
+            { name: 'OWASP Top 10', url: 'https://owasp.org/www-project-top-ten/' },
+            { name: 'MDN CORS Guide', url: 'https://developer.mozilla.org/en-US/docs/Web/HTTP/Guides/CORS' },
+        ],
+        lessons: [
+            {
+                id: 'network-lv8-l1',
+                title: '1. 安全问题先分层，再谈解决方案',
+                content: `
+# 先分层
+
+网络安全相关问题最容易乱，是因为它们看起来都像“请求出问题了”。
+
+但真实世界里，问题可能发生在：
+
+- 浏览器同源边界
+- 传输链路
+- 入口代理层
+- 应用业务逻辑层
+
+只有先分层，防线才不会错位。
+`,
+            },
+            {
+                id: 'network-lv8-l2',
+                title: '2. CORS 和 CSRF 名字像，但解决的不是一回事',
+                content: `
+# 两类不同问题
+
+CORS 关心的是：
+
+- 浏览器是否允许跨源读取响应
+
+CSRF 关心的是：
+
+- 用户浏览器会不会被诱导带着身份发出不该发的请求
+
+它们都跟浏览器有关，但保护目标完全不同。
+`,
+            },
+            {
+                id: 'network-lv8-l3',
+                title: '3. HTTPS 能防窃听和篡改，但不是万能护符',
+                content: `
+# TLS 的边界
+
+HTTPS 很重要，因为它能降低中间人窃听与篡改风险。
+
+但它并不能自动解决：
+
+- 权限设计错误
+- 恶意业务请求
+- 应用逻辑漏洞
+
+所以网络安全不能只停在“上 HTTPS 就好了”。
+`,
+            },
+            {
+                id: 'network-lv8-l4',
+                title: '4. WAF 与入口防护是在前线减压，不是替代后端授权',
+                content: `
+# 多层防线
+
+WAF、限流、入口规则这些能力，更多是在前线过滤明显恶意流量和异常模式。
+
+它们很重要，但它们替代不了：
+
+- 后端权限校验
+- 参数验证
+- 业务规则保护
+
+真正稳的安全体系通常一定是多层叠加。
+`,
+            },
+        ],
+        quizzes: [
+            {
+                id: 'network-lv8-q1',
+                question: '为什么说 CORS 和 CSRF 不是同一类问题？',
+                options: ['因为一个是字体，一个是图片', '因为一个限制跨源读取边界，一个防止带身份的伪造请求', '因为两者都只在数据库层发生', '因为 HTTPS 会自动替代它们'],
+                correctAnswer: 1,
+                explanation: '两者都涉及浏览器，但保护目标完全不同，不能混为一谈。',
+                difficulty: 'Easy',
+            },
+            {
+                id: 'network-lv8-q2',
+                question: '为什么 WAF 不能替代后端权限校验？',
+                options: ['因为 WAF 只会处理 CSS', '因为入口防护不能理解所有细粒度业务授权规则', '因为 WAF 不能看 HTTP 请求', '因为后端永远不需要安全策略'],
+                correctAnswer: 1,
+                explanation: '入口层能挡一部分明显风险，但细粒度业务允许与否仍需应用层自己判断。',
+                difficulty: 'Medium',
+            },
+        ],
+    },
+    {
+        id: 'network-lv9',
+        level: 9,
+        title: 'Level 9: 网络调试工具',
+        description: '学习用 curl、dig、traceroute、Wireshark 和浏览器 DevTools 把抽象网络问题落成可观察证据，真正具备定位问题的手感。',
+        topics: ['curl', 'dig', 'traceroute', 'Wireshark', 'DevTools'],
+        keyConcepts: ['证据驱动调试', '链路分段', '请求重放', 'DNS 观察', '抓包分析'],
+        mission: '面对一个真实网络问题，选择合适工具快速缩小问题范围，并用证据说明结论。',
+        outcome: '能把“网站打不开”“接口很慢”“域名不对”“证书报错”这类问题拆到合适工具上，而不是纯靠猜。',
+        checklist: [
+            '能知道 curl 更适合重放请求、看头和看状态码',
+            '能知道 dig 更适合看域名解析链路',
+            '能理解什么时候需要更重的抓包或路径分析工具',
+        ],
+        resources: [
+            { name: 'curl Manual', url: 'https://curl.se/docs/manpage.html' },
+            { name: 'Wireshark User Guide', url: 'https://www.wireshark.org/docs/wsug_html_chunked/' },
+        ],
+        lessons: [
+            {
+                id: 'network-lv9-l1',
+                title: '1. 网络调试的第一原则是先拿证据',
+                content: `
+# 证据优先
+
+网络问题最忌讳“我感觉是后端”或者“我猜是 DNS”。
+
+更稳的方式是先问：
+
+- 能不能重放请求
+- 能不能看到解析结果
+- 能不能分段看延迟
+
+工具的意义，就是把猜测变成证据。
+`,
+            },
+            {
+                id: 'network-lv9-l2',
+                title: '2. curl 和 DevTools 让你最快看到请求真相',
+                content: `
+# 轻量排查入口
+
+大多数 Web 问题的第一步，通常是：
+
+- 在浏览器 DevTools 里看瀑布图与响应
+- 用 curl 复现请求头、状态码和响应体
+
+很多问题在这一层就已经能缩到很小范围。
+`,
+            },
+            {
+                id: 'network-lv9-l3',
+                title: '3. dig 与 traceroute 更适合看“路和地址”',
+                content: `
+# 地址与路径
+
+如果怀疑：
+
+- 域名不对
+- DNS 传播异常
+- 某段网络路径异常
+
+就应该优先上 dig 或 traceroute，而不是盲目改业务代码。
+`,
+            },
+            {
+                id: 'network-lv9-l4',
+                title: '4. 抓包不是第一步，但在复杂问题里很有价值',
+                content: `
+# 抓包时机
+
+Wireshark 这类抓包工具通常更重，但在复杂问题里非常有价值，例如：
+
+- 协议细节异常
+- 重传与丢包分析
+- TLS 握手异常
+
+关键不是“会不会抓包”，而是知道什么时候值得上更重工具。
+`,
+            },
+        ],
+        quizzes: [
+            {
+                id: 'network-lv9-q1',
+                question: '当你想快速确认一个接口到底返回了什么状态码和响应头时，最顺手的工具组合通常是哪项？',
+                options: ['curl 或浏览器 DevTools', 'Photoshop 和 Figma', 'ORM 和迁移脚本', 'Docker Compose 和 Redis CLI'],
+                correctAnswer: 0,
+                explanation: 'curl 和 DevTools 往往是查看 HTTP 请求细节最快的第一层工具。',
+                difficulty: 'Easy',
+            },
+            {
+                id: 'network-lv9-q2',
+                question: '什么时候更值得使用 dig 而不是直接改后端代码？',
+                options: ['当你怀疑域名解析链路或记录传播有问题时', '当你想修改按钮颜色时', '当你要优化 React 渲染时', '当你要新增支付 webhook 时'],
+                correctAnswer: 0,
+                explanation: 'dig 适合观察 DNS 结果和解析链路，能先判断问题是否根本不在应用代码层。',
+                difficulty: 'Medium',
+            },
+        ],
+    }
 ];
 
 export const LEARNING_TRACKS: LearningTrack[] = [
