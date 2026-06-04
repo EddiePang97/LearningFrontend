@@ -621,6 +621,7 @@ const backendLv5: LearningStage = {
         {
             id: 'backend-lv5-l1',
             title: '1. 哪些事情不应该阻塞主请求',
+            labId: 'async-boundary-lab',
             content: `
 # 请求链路与后台任务
 

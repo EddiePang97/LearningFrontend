@@ -71,6 +71,7 @@ const LAB_COMPONENTS: Record<LabId, React.LazyExoticComponent<React.ComponentTyp
     'session-cookie-lab': lazyNamed(() => import('./labs/SessionCookieLab'), 'SessionCookieLab'),
     'data-schema-lab': lazyNamed(() => import('./labs/DataSchemaLab'), 'DataSchemaLab'),
     'constraint-guard-lab': lazyNamed(() => import('./labs/ConstraintGuardLab'), 'ConstraintGuardLab'),
+    'async-boundary-lab': lazyNamed(() => import('./labs/AsyncBoundaryLab'), 'AsyncBoundaryLab'),
     'stream-lab': lazyNamed(() => import('./labs/StreamLab'), 'StreamLab'),
     'middleware-lab': lazyNamed(() => import('./labs/MiddlewareLab'), 'MiddlewareLab'),
     'metric-trend-lab': lazyNamed(() => import('./labs/MetricTrendLab'), 'MetricTrendLab'),
