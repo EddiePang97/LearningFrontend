@@ -337,6 +337,7 @@ Cookie 是浏览器保存的一小段数据，Session 则通常是服务端保�
         {
             id: 'backend-lv2-l4',
             title: '4. RBAC：把权限写成模型，而不是写死在 if 里',
+            labId: 'rbac-lab',
             content: `
 # RBAC 权限模型
 

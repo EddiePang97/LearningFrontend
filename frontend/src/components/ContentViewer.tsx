@@ -69,6 +69,7 @@ const LAB_COMPONENTS: Record<LabId, React.LazyExoticComponent<React.ComponentTyp
     'system-design-lab': lazyNamed(() => import('./labs/SystemDesignLab'), 'SystemDesignLab'),
     'transaction-lab': lazyNamed(() => import('./labs/TransactionLab'), 'TransactionLab'),
     'index-query-lab': lazyNamed(() => import('./labs/IndexQueryLab'), 'IndexQueryLab'),
+    'rbac-lab': lazyNamed(() => import('./labs/RbacLab'), 'RbacLab'),
     'big-o-lab': lazyNamed(() => import('./labs/BigOLab'), 'BigOLab'),
     'sorting-lab': lazyNamed(() => import('./labs/SortingLab'), 'SortingLab'),
     'tree-lab': lazyNamed(() => import('./labs/TreeLab'), 'TreeLab'),
