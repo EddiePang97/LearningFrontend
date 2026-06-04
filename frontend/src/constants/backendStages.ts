@@ -1107,6 +1107,7 @@ const backendLv9: LearningStage = {
         {
             id: 'backend-lv9-l4',
             title: '4. 故障、降级与恢复：系统设计的下半场',
+            labId: 'degradation-lab',
             content: `
 # 故障与恢复
 
