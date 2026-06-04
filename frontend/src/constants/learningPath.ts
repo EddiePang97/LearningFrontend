@@ -749,10 +749,419 @@ Webhook 的职责通常包括：
             },
         ],
     },
-    createPlaceholderStage('fullstack', 6, '测试策略', '组织单元测试、集成测试和 E2E 测试。', ['Unit Test', 'Integration Test', 'E2E'], '为核心业务路径补测试。', '能判断不同风险应该用哪种测试覆盖。'),
-    createPlaceholderStage('fullstack', 7, '部署、环境与 CI/CD', '管理环境变量、构建、发布和回滚。', ['Deploy', 'Environment', 'CI/CD'], '把应用稳定发布到线上。', '能解释 dev、staging、production 的差异。'),
-    createPlaceholderStage('fullstack', 8, '跨端性能预算', '同时优化前端加载和后端响应。', ['Performance Budget', 'Latency', 'Bundle'], '建立端到端性能指标。', '能定位性能瓶颈是在客户端、网络还是服务端。'),
-    createPlaceholderStage('fullstack', 9, '生产级 SaaS Capstone', '综合实现一个真实 SaaS 小系统。', ['SaaS', 'Architecture', 'Capstone'], '完成一个可演示、可部署、可维护的全栈项目。', '能独立交付一个小型生产级全栈应用。')
+    {
+        id: 'fullstack-lv6',
+        level: 6,
+        title: 'Level 6: 测试策略与质量防线',
+        description: '学习如何把单元测试、集成测试和 E2E 测试组织成一套完整质量防线，让全栈变更不会轻易把关键业务链路打断。',
+        topics: ['Unit Test', 'Integration Test', 'E2E', 'Risk Coverage', 'Regression'],
+        keyConcepts: ['测试金字塔', '风险分层', '关键路径', '回归保护'],
+        mission: '为一条真实全栈业务链路设计测试分层，明确哪些逻辑适合单测、哪些必须跑集成或 E2E。',
+        outcome: '能根据风险和反馈速度选择合适测试层级，而不是把所有问题都交给同一种测试。',
+        checklist: [
+            '能区分单元测试、集成测试和 E2E 测试分别保护什么',
+            '能为登录、下单或支付等关键路径设计最小测试组合',
+            '能解释为什么测试不是越多越好，而是越贴近风险越有效',
+        ],
+        resources: [
+            { name: 'Testing Trophy', url: 'https://kentcdodds.com/blog/the-testing-trophy-and-testing-classifications' },
+            { name: 'Playwright Best Practices', url: 'https://playwright.dev/docs/best-practices' },
+        ],
+        lessons: [
+            {
+                id: 'fullstack-lv6-l1',
+                title: '1. 先问风险，再决定测试层级',
+                content: `
+# 风险先行
+
+全栈测试最常见的误区，是先选工具，再想要不要测。
+
+更可靠的顺序应该是：
+
+1. 哪条业务路径最容易出事故
+2. 出事故后影响有多大
+3. 哪种测试最适合最低成本发现这个问题
+
+测试策略本质上是在分配验证预算，而不是堆数量。
+`,
+            },
+            {
+                id: 'fullstack-lv6-l2',
+                title: '2. 单测保护纯逻辑，集成测试保护边界协作',
+                content: `
+# 两类保护面
+
+单元测试适合验证：
+
+- 纯函数
+- 表单校验规则
+- 数据转换逻辑
+
+集成测试更适合验证：
+
+- API 与数据库协作
+- 页面与状态管理协作
+- 认证中间件与业务处理流程
+
+如果把边界协作问题全交给单测，通常测不出来。
+`,
+            },
+            {
+                id: 'fullstack-lv6-l3',
+                title: '3. E2E 是关键路径保险，而不是全站截图收集器',
+                content: `
+# E2E 的位置
+
+E2E 测试最宝贵的价值，是保护最关键的用户成功路径，例如：
+
+- 注册并登录
+- 创建内容并保存
+- 发起支付并看到结果
+
+E2E 不适合覆盖所有小细节，否则会越来越慢、越来越脆弱。
+`,
+            },
+            {
+                id: 'fullstack-lv6-l4',
+                title: '4. 把质量防线嵌进日常开发流',
+                content: `
+# 日常开发流
+
+成熟团队不会把测试当成“上线前临时补一下”。
+
+更合理的做法是：
+
+- 开发时先补核心单测
+- 合并前跑关键集成测试
+- 发布前或合并后跑关键 E2E
+
+这样测试才真正成为质量防线，而不是额外负担。
+`,
+            },
+        ],
+        quizzes: [
+            {
+                id: 'fullstack-lv6-q1',
+                question: '面对“支付成功但订单没更新”的高风险问题，最有价值的测试更可能是哪类？',
+                options: ['只补几个纯函数单测', '只做视觉快照测试', '覆盖支付链路协作的集成或 E2E 测试', '完全不测，靠人工回归'],
+                correctAnswer: 2,
+                explanation: '这类问题通常发生在多层协作边界上，需要更贴近真实链路的验证方式。',
+                difficulty: 'Easy',
+            },
+            {
+                id: 'fullstack-lv6-q2',
+                question: '为什么 E2E 不适合“把所有页面都扫一遍”？',
+                options: ['因为 E2E 不能测试表单', '因为 E2E 应该重点保护关键路径，否则成本高且脆弱', '因为 E2E 不能访问数据库', '因为 E2E 只能在本地运行'],
+                correctAnswer: 1,
+                explanation: 'E2E 最适合保护高价值路径，过度泛化会让测试集又慢又不稳定。',
+                difficulty: 'Medium',
+            },
+        ],
+    },
+    {
+        id: 'fullstack-lv7',
+        level: 7,
+        title: 'Level 7: 部署、环境与 CI/CD',
+        description: '把全栈应用从本地运行推进到稳定发布，理解环境变量、构建产物、发布流水线和回滚机制如何协同。',
+        topics: ['Deploy', 'Environment', 'CI/CD', 'Rollback', 'Release Confidence'],
+        keyConcepts: ['环境隔离', '构建一致性', '自动化发布', '回滚策略'],
+        mission: '设计一条能从代码提交走到线上发布的全栈交付流水线，并解释每个环境的职责。',
+        outcome: '能说明 dev、staging、production 分别承担什么角色，并能解释为什么发布必须可重复、可验证、可回滚。',
+        checklist: [
+            '能解释环境变量为什么不能混在代码里',
+            '能画出 commit 到 build、deploy、verify 的发布路径',
+            '能解释为什么可回滚比“永不出错”更现实',
+        ],
+        resources: [
+            { name: 'Twelve-Factor App: Config', url: 'https://12factor.net/config' },
+            { name: 'GitHub Actions Documentation', url: 'https://docs.github.com/en/actions' },
+        ],
+        lessons: [
+            {
+                id: 'fullstack-lv7-l1',
+                title: '1. 本地能跑不等于可交付',
+                content: `
+# 可交付不是“我电脑上行”
+
+全栈项目要进入真实交付阶段，必须解决两个问题：
+
+- 产物是否能被别人稳定构建出来
+- 环境差异是否会导致行为漂移
+
+如果答案不确定，你就还没有真正具备交付能力。
+`,
+            },
+            {
+                id: 'fullstack-lv7-l2',
+                title: '2. dev、staging、production 为什么不能混成一套',
+                content: `
+# 环境职责
+
+三个环境通常承担不同目标：
+
+- **dev**: 快速迭代与联调
+- **staging**: 接近生产的预演与验证
+- **production**: 面向真实用户的稳定运行
+
+把环境职责混在一起，问题就会在最贵的时候暴露。
+`,
+            },
+            {
+                id: 'fullstack-lv7-l3',
+                title: '3. CI/CD 不是自动部署脚本，而是交付信心系统',
+                content: `
+# CI/CD 的真正价值
+
+CI/CD 不只是“自动帮你执行命令”，而是：
+
+- 固定构建流程
+- 自动跑校验
+- 减少手工发布差异
+- 提高每次上线的可预测性
+
+当发布依赖个人记忆时，系统迟早会不稳定。
+`,
+            },
+            {
+                id: 'fullstack-lv7-l4',
+                title: '4. 回滚能力决定你敢不敢发布',
+                content: `
+# 回滚能力
+
+真正成熟的发布流程，不是“我确信这次不会出问题”，而是“就算出问题，我也能快速止损”。
+
+所以一个可交付系统通常需要：
+
+- 可追踪版本
+- 可验证发布结果
+- 可快速回退策略
+
+回滚能力本身就是发布能力的一部分。
+`,
+            },
+        ],
+        quizzes: [
+            {
+                id: 'fullstack-lv7-q1',
+                question: '为什么全栈应用通常需要 staging 环境？',
+                options: ['因为 production 太慢', '因为 staging 可以在接近真实环境下验证发布结果', '因为 staging 不需要环境变量', '因为 staging 可以替代所有本地开发'],
+                correctAnswer: 1,
+                explanation: 'staging 的核心价值是用接近生产的环境提前暴露问题。',
+                difficulty: 'Easy',
+            },
+            {
+                id: 'fullstack-lv7-q2',
+                question: 'CI/CD 更准确的定位更接近下面哪项？',
+                options: ['自动生成 UI 原型', '交付信心与一致性系统', '数据库备份工具', '前端 CSS 主题切换器'],
+                correctAnswer: 1,
+                explanation: 'CI/CD 的核心不是自动化本身，而是降低发布不确定性。',
+                difficulty: 'Medium',
+            },
+        ],
+    },
+    {
+        id: 'fullstack-lv8',
+        level: 8,
+        title: 'Level 8: 跨端性能预算',
+        description: '同时观察前端加载、网络传输和后端响应，把性能当成端到端预算，而不是只盯住单个页面或单个接口。',
+        topics: ['Performance Budget', 'Latency', 'Bundle', 'Render Cost', 'Backend Response'],
+        keyConcepts: ['性能预算', '关键指标', '瓶颈归因', '跨层协作'],
+        mission: '为一个真实全栈产品建立端到端性能指标，说明慢到底是慢在浏览器、网络还是服务端。',
+        outcome: '能从用户体验角度拆解性能问题，并给出跨前端、网络、后端的优先级优化顺序。',
+        checklist: [
+            '能区分加载慢、渲染慢、接口慢和交互慢分别属于哪一层问题',
+            '能为关键页面设定基本性能预算',
+            '能解释为什么只优化 bundle 或只优化 SQL 往往不够',
+        ],
+        resources: [
+            { name: 'Web Vitals', url: 'https://web.dev/vitals/' },
+            { name: 'Time to First Byte (TTFB)', url: 'https://developer.mozilla.org/en-US/docs/Glossary/TTFB' },
+        ],
+        lessons: [
+            {
+                id: 'fullstack-lv8-l1',
+                title: '1. 用户只会感受到“快不快”，不会区分是哪层慢',
+                content: `
+# 用户视角
+
+用户不会说“你的 hydration 太慢”或者“TTFB 偏高”。
+
+用户只会感受到：
+
+- 页面为什么打开这么慢
+- 按了按钮为什么没反应
+- 保存后为什么要等这么久
+
+所以性能优化必须先回到真实体验，再往下拆归因。
+`,
+            },
+            {
+                id: 'fullstack-lv8-l2',
+                title: '2. 把性能拆成浏览器、网络和服务端三段',
+                content: `
+# 三段归因
+
+一个全栈请求的时间，通常可以拆成：
+
+- 浏览器准备和渲染成本
+- 网络传输成本
+- 服务端处理和数据库成本
+
+只有先分段，你才知道应该优先压 bundle、减请求、上缓存还是改查询。
+`,
+            },
+            {
+                id: 'fullstack-lv8-l3',
+                title: '3. 性能预算帮助团队避免“越做越重”',
+                content: `
+# 性能预算
+
+性能预算的作用，是在团队持续迭代时给出清晰边界，例如：
+
+- 首屏 JS 不超过多少
+- 关键接口在多少毫秒内返回
+- 某个交互的反馈延迟不能超过多少
+
+没有预算，性能只会在每次“先上线再说”里慢慢流失。
+`,
+            },
+            {
+                id: 'fullstack-lv8-l4',
+                title: '4. 优化顺序要跟用户价值走，而不是跟技术偏好走',
+                content: `
+# 优先级
+
+性能优化不是“我最熟哪一层就改哪一层”，而是：
+
+1. 找出用户最痛的慢点
+2. 找出真正主导成本的层级
+3. 优先做收益最大、风险最小的改动
+
+跨端性能的关键，不是全面撒网，而是精确归因和排序。
+`,
+            },
+        ],
+        quizzes: [
+            {
+                id: 'fullstack-lv8-q1',
+                question: '为什么性能问题要按浏览器、网络、服务端分段归因？',
+                options: ['因为这样术语更多', '因为只有分段后才能判断真正瓶颈在哪一层', '因为性能只能由前端负责', '因为数据库延迟总是最重要'],
+                correctAnswer: 1,
+                explanation: '分段归因能避免盲目优化，把时间用在真正主导体验的瓶颈上。',
+                difficulty: 'Easy',
+            },
+            {
+                id: 'fullstack-lv8-q2',
+                question: '性能预算最核心的团队价值更接近哪项？',
+                options: ['让所有页面颜色更统一', '给持续迭代设定明确的性能边界', '替代监控系统', '让后端不再需要缓存'],
+                correctAnswer: 1,
+                explanation: '预算帮助团队在长期迭代中避免体验持续退化。',
+                difficulty: 'Medium',
+            },
+        ],
+    },
+    {
+        id: 'fullstack-lv9',
+        level: 9,
+        title: 'Level 9: 生产级 SaaS Capstone',
+        description: '把需求拆解、架构设计、认证、支付、测试、发布和性能这些能力真正串成一个可以演示、可部署、可维护的全栈小系统。',
+        topics: ['SaaS', 'Architecture', 'Capstone', 'Delivery', 'Operations'],
+        keyConcepts: ['端到端交付', '架构取舍', '可维护性', '真实运营场景'],
+        mission: '规划并交付一个小型 SaaS 全栈项目，能够清楚解释功能边界、技术选型、发布路径和后续维护策略。',
+        outcome: '能独立交付一个小型生产级全栈应用，并向别人讲清楚它为什么这样设计、如何验证、如何上线与扩展。',
+        checklist: [
+            '能定义一个有真实用户价值的 SaaS 最小版本',
+            '能把前端、后端、数据、支付、监控和发布串成完整交付路径',
+            '能说明系统接下来如何扩展、维护与降低风险',
+        ],
+        resources: [
+            { name: 'SaaS Architecture Fundamentals', url: 'https://learn.microsoft.com/en-us/azure/architecture/guide/saas/' },
+            { name: 'The Twelve-Factor App', url: 'https://12factor.net/' },
+        ],
+        lessons: [
+            {
+                id: 'fullstack-lv9-l1',
+                title: '1. Capstone 不是大而全，而是小而完整',
+                content: `
+# 小而完整
+
+生产级 capstone 的关键不是功能尽量多，而是系统足够完整：
+
+- 有明确用户
+- 有核心场景
+- 有真实数据流
+- 有上线与维护考虑
+
+一个能闭环的 SaaS 小系统，比十个散功能更能证明全栈能力。
+`,
+            },
+            {
+                id: 'fullstack-lv9-l2',
+                title: '2. 用业务场景反推架构，而不是反过来',
+                content: `
+# 业务反推架构
+
+SaaS 架构不是为了“看起来专业”，而是为了支撑业务：
+
+- 谁会登录
+- 谁付费
+- 谁管理数据
+- 哪些地方最怕出错
+
+先把业务场景讲清楚，再决定权限模型、数据模型和服务边界，架构才不空转。
+`,
+            },
+            {
+                id: 'fullstack-lv9-l3',
+                title: '3. 交付能力要覆盖开发、验证、发布和运营',
+                content: `
+# 完整交付
+
+一个生产级全栈项目，至少要能回答：
+
+- 怎么开发
+- 怎么验证
+- 怎么发布
+- 出问题怎么发现和恢复
+
+如果只能写功能，不能稳定交付，它还不算真正的 production-ready。
+`,
+            },
+            {
+                id: 'fullstack-lv9-l4',
+                title: '4. 复盘决定你能不能从“做完”走向“做成”',
+                content: `
+# 复盘与演进
+
+capstone 完成后，真正有价值的问题通常是：
+
+- 哪些地方最脆弱
+- 哪些设计以后会拖慢扩展
+- 下一版应该优先补什么
+
+能复盘、能排序、能演进，才说明你已经不只是“做出来”，而是开始具备产品化与工程化视角。
+`,
+            },
+        ],
+        quizzes: [
+            {
+                id: 'fullstack-lv9-q1',
+                question: '为什么一个好的全栈 capstone 更强调“小而完整”？',
+                options: ['因为这样就不需要数据库', '因为闭环交付比功能堆叠更能体现真实工程能力', '因为 SaaS 不能做权限系统', '因为 production 不需要监控'],
+                correctAnswer: 1,
+                explanation: '完整闭环更能证明你理解需求、数据、交付、验证和维护之间的关系。',
+                difficulty: 'Easy',
+            },
+            {
+                id: 'fullstack-lv9-q2',
+                question: 'production-ready 的全栈项目最不应该缺少哪类能力？',
+                options: ['部署与出错后的恢复思路', '页面配色选择', '动画微交互偏好', '是否使用热门框架名称'],
+                correctAnswer: 0,
+                explanation: '真正生产级项目必须考虑发布、监控、恢复和演进，而不只是功能展示。',
+                difficulty: 'Medium',
+            },
+        ],
+    }
 ];
 
 const NETWORK_STAGES: LearningStage[] = [
