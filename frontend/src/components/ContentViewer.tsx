@@ -77,6 +77,7 @@ const LAB_COMPONENTS: Record<LabId, React.LazyExoticComponent<React.ComponentTyp
     'rbac-lab': lazyNamed(() => import('./labs/RbacLab'), 'RbacLab'),
     'cache-aside-lab': lazyNamed(() => import('./labs/CacheAsideLab'), 'CacheAsideLab'),
     'cache-consistency-lab': lazyNamed(() => import('./labs/CacheConsistencyLab'), 'CacheConsistencyLab'),
+    'cache-incident-lab': lazyNamed(() => import('./labs/CacheIncidentLab'), 'CacheIncidentLab'),
     'signed-url-lab': lazyNamed(() => import('./labs/SignedUrlLab'), 'SignedUrlLab'),
     'rate-limit-lab': lazyNamed(() => import('./labs/RateLimitLab'), 'RateLimitLab'),
     'api-contract-lab': lazyNamed(() => import('./labs/ApiContractLab'), 'ApiContractLab'),

@@ -559,6 +559,7 @@ const backendLv4: LearningStage = {
         {
             id: 'backend-lv4-l4',
             title: '4. 穿透、击穿、雪崩：缓存事故的三种典型形态',
+            labId: 'cache-incident-lab',
             content: `
 # 三类缓存事故
 
