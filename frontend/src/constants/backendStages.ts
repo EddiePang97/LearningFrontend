@@ -408,6 +408,7 @@ const backendLv3: LearningStage = {
         {
             id: 'backend-lv3-l1',
             title: '1. 数据建模：先想关系，再想字段',
+            labId: 'data-schema-lab',
             content: `
 # 数据建模
 
