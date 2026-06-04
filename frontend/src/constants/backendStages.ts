@@ -519,7 +519,7 @@ const backendLv4: LearningStage = {
         {
             id: 'backend-lv4-l2',
             title: '2. Cache Aside：最常见也最容易出问题的模式',
-            labId: 'http-cache',
+            labId: 'cache-aside-lab',
             content: `
 # Cache Aside
 
