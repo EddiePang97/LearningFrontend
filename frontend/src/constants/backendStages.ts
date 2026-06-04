@@ -881,6 +881,7 @@ Trace 的价值就是把一条请求跨多个组件的执行链路串起来，�
         {
             id: 'backend-lv7-l4',
             title: '4. 告警：别让人被噪音淹没',
+            labId: 'alert-noise-lab',
             content: `
 # 告警设计
 
