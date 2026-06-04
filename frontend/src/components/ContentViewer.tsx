@@ -67,6 +67,7 @@ const LAB_COMPONENTS: Record<LabId, React.LazyExoticComponent<React.ComponentTyp
     'middleware-lab': lazyNamed(() => import('./labs/MiddlewareLab'), 'MiddlewareLab'),
     'queue-retry-lab': lazyNamed(() => import('./labs/QueueRetryLab'), 'QueueRetryLab'),
     'system-design-lab': lazyNamed(() => import('./labs/SystemDesignLab'), 'SystemDesignLab'),
+    'transaction-lab': lazyNamed(() => import('./labs/TransactionLab'), 'TransactionLab'),
     'big-o-lab': lazyNamed(() => import('./labs/BigOLab'), 'BigOLab'),
     'sorting-lab': lazyNamed(() => import('./labs/SortingLab'), 'SortingLab'),
     'tree-lab': lazyNamed(() => import('./labs/TreeLab'), 'TreeLab'),

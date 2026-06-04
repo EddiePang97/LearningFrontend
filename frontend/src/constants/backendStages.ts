@@ -446,6 +446,7 @@ const backendLv3: LearningStage = {
         {
             id: 'backend-lv3-l4',
             title: '4. 事务：把必须一起成功的操作绑在一起',
+            labId: 'transaction-lab',
             content: `
 # 事务
 
