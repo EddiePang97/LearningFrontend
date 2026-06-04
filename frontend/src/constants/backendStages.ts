@@ -285,6 +285,7 @@ const backendLv2: LearningStage = {
         {
             id: 'backend-lv2-l1',
             title: '1. 认证与授权，不要混成一个词',
+            labId: 'auth-boundary-lab',
             content: `
 # 认证与授权
 
